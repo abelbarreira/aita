@@ -1,3 +1,6 @@
+# Development-only dependencies
+
 pytest
 black
 flake8
+python-dotenv

@@ -6,6 +6,12 @@ import argparse
 from app.core.prompt_parser import parse_prompt
 from app.version import get_version
 
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+
 
 def main():
     parser = argparse.ArgumentParser(description="🧳 AitA - AI Travel Assistant")
@@ -27,6 +33,11 @@ def main():
             print(f"{key}: {val}")
     else:
         parser.print_help()
+
+    required = ["FLIGHT_API_KEY", "HOTEL_API_KEY"]
+    for var in required:
+        if not os.getenv(var):
+            raise EnvironmentError(f"Missing required environment variable: {var}")
 
 
 if __name__ == "__main__":
