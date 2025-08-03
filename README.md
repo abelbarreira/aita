@@ -2,7 +2,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.10-yellow)](https://www.python.org/downloads/release/python-31012/)
 ![License](https://img.shields.io/github/license/abelbarreira/CppProjectTemplate)
-[![Pull Requests Welcome](https://img.shields.io/badge/pull%20requests-welcome-brightgreen.svg)](https://github.com/python/typeshed/blob/main/CONTRIBUTING.md)
+[![Pull Requests Welcome](https://img.shields.io/badge/pull%20requests-welcome-brightgreen.svg)](https://github.com/abelbarreira/aita/blob/main/.github/CONTRIBUTING.md)
 
 **AitA (AI Travel Assistant)** helps users find the best combinations of flights and hotels using natural language prompts and smart filters. Designed to be open-source, modular, and easily extensible, AitA provides a framework for travel planning with integration of free APIs, flexible user input, and intelligent trip evaluations.
 
