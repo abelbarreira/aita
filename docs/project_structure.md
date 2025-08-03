@@ -4,6 +4,7 @@
 AitA/
 │
 ├── app/
+│ ├── __init__.py
 │ ├── main.py # Entry point for CLI
 │ ├── version.py # Versioning module
 │ ├── cli.py # Future CLI argument parsing
