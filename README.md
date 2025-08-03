@@ -20,7 +20,7 @@
 
 ---
 
-# 🔧 Project Structure
+## 🔧 Project Structure
 
 [Project Structure](docs/project_structure.md)
 
@@ -83,3 +83,9 @@ MIT License
 Copyright (c) 2025 abelbarreira
 
 For more, check out the [License File](LICENSE).
+
+## 🤖 AI-Powered Collaboration
+
+This project is being developed with support and guidance from [ChatGPT](https://chatgpt.com/) by OpenAI.
+
+Collaboration started in August 2025 using `ChatGPT-4.5`.
