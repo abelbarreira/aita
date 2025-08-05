@@ -8,9 +8,7 @@
         "cSpell.language": "en",
         "task.autoDetect": "off",
         "python.pythonPath": "venv/bin/python",
-        "editor.formatOnSave": true,
-        "files.autoSave": "onFocusChange",
         "python.linting.enabled": true,
         "python.linting.flake8Enabled": true
-    }
+    },
 }

@@ -1,0 +1,8 @@
+{
+  // Editor configuration
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.trimAutoWhitespace": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "onFocusChange",
+}

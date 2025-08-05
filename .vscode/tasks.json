@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup Python",
+      "type": "shell",
+      "command": "./scripts/setup_python.sh",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      }
+    },
+  ]
+}
