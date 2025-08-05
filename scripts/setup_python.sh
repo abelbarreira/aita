@@ -30,6 +30,15 @@ fi
 
 python -m pipx ensurepath
 
+# Install or upgrade Hatch using pipx
+if ! command -v hatch &> /dev/null; then
+  echo "🔧 Installing Hatch via pipx..."
+  pipx install hatch
+else
+  echo "✅ Hatch already installed. Upgrading..."
+  pipx upgrade hatch
+fi
+
 popd > /dev/null
 
 echo "✅ Python environment setup complete."

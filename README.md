@@ -42,30 +42,7 @@ To quickly set up the correct Python version:
 ./scripts/setup_python.sh
 ```
 
-### 🐍 Create Virtual Environment
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-```
-
-### 📦 Install Requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-### 🧪 Run CLI Prompt Parser
-
-```bash
-make run
-```
-
-### ✅ Run Tests
-
-```bash
-make test
-```
+Use `hatch` commands to manage environments, testing, building, and publishing.
 
 ### 🧰 Tech Stack
 
