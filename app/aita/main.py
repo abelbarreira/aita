@@ -1,16 +1,18 @@
+#!/usr/bin/env python
+
 """
 Main entry point for AitA - AI Travel Assistant
 """
 
 import argparse
-from app.core.prompt_parser import parse_prompt
-from app.version import get_version
+from aita.version import get_version
+from aita.core.prompt_parser import parse_prompt
 
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
-# Load environment variables from .env
-load_dotenv()
+# # Load environment variables from .env
+# load_dotenv()
 
 
 def main():
@@ -34,10 +36,10 @@ def main():
     else:
         parser.print_help()
 
-    required = ["FLIGHT_API_KEY", "HOTEL_API_KEY"]
-    for var in required:
-        if not os.getenv(var):
-            raise EnvironmentError(f"Missing required environment variable: {var}")
+    # required = ["FLIGHT_API_KEY", "HOTEL_API_KEY"]
+    # for var in required:
+    #     if not os.getenv(var):
+    #         raise EnvironmentError(f"Missing required environment variable: {var}")
 
 
 if __name__ == "__main__":
