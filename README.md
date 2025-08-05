@@ -32,6 +32,16 @@
 
 ## 🚀 Quick Start
 
+## 🛠 Setup Python Environment
+
+This project uses `pyenv` to manage Python versions and `pipx` for isolated tool installation.
+
+To quickly set up the correct Python version:
+
+```bash
+./scripts/setup_python.sh
+```
+
 ### 🐍 Create Virtual Environment
 
 ```bash
