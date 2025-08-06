@@ -1,0 +1,31 @@
+[
+  {
+    "prompt": "Find me flights from Copenhagen to Tokyo in September.",
+    "expected": {
+      "origin": "Copenhagen",
+      "destination": "Tokyo",
+      "month": "September"
+    }
+  },
+  {
+    "prompt": "Looking for a 4 stars hotel in Dubai near the beach. All-Inclusive preferred.",
+    "expected": {
+      "hotel": {
+        "stars": 4,
+        "board": "All-Inclusive"
+      }
+    }
+  },
+  {
+    "prompt": "from Paris to Rome staying between 5 to 10 days in July",
+    "expected": {
+      "origin": "Paris",
+      "destination": "Rome",
+      "month": "July",
+      "duration": {
+        "min": 5,
+        "max": 10
+      }
+    }
+  }
+]

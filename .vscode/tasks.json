@@ -19,5 +19,14 @@
         "isDefault": true
       }
     },
+    {
+      "label": "Test App",
+      "type": "shell",
+      "command": "./scripts/run_tests.sh",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      }
+    },
   ]
 }

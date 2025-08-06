@@ -16,3 +16,9 @@ dependencies = [
 
 [project.scripts]
 aita = "aita.main:main"
+
+[tool.hatch.envs.default]
+dependencies = ["pytest"]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest test"

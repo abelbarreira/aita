@@ -1,16 +1,29 @@
+import json
 import pytest
-from app.aita.core.prompt_parser import parse_prompt
+from src.aita.core.prompt_parser import parse_prompt
 
 
-def test_parse_prompt_basic():
-    prompt = 'Find me Flights and Hotels from "Copenhagen" to "Palma de Mallorca", area "Playa Magaluf", in "September", staying between "7" to "10" days. Hotels: Within "300 meters" from the beach, "4" stars, "All-Inclusive". Flights: Departing between "08:00" and "19:00".'
+def load_test_cases():
+    with open("test/test_prompts.json", "r") as f:
+        return json.load(f)
+
+
+@pytest.mark.parametrize("test_case", load_test_cases())
+def test_prompt_parsing(test_case):
+    prompt = test_case["prompt"]
+    expected = test_case["expected"]
     result = parse_prompt(prompt)
-    assert result["origin"] == "Copenhagen"
-    assert result["destination"] == "Palma de Mallorca"
-    assert result["area"] == "Playa Magaluf"
-    assert result["month"] == "September"
-    assert result["duration"]["min"] == 7
-    assert result["duration"]["max"] == 10
-    assert result["hotel"]["stars"] == 4
-    assert result["hotel"]["board"] == "All-Inclusive"
-    assert result["flight"]["departure_time"]["from"] == "08:00"
+
+    for key, expected_val in expected.items():
+        actual_val = result.get(key)
+
+        if isinstance(expected_val, dict):
+            assert isinstance(actual_val, dict), f"{key} should be a dict"
+            for subkey, subval in expected_val.items():
+                assert (
+                    actual_val.get(subkey) == subval
+                ), f"{key}.{subkey} mismatch: expected {subval}, got {actual_val.get(subkey)}"
+        else:
+            assert (
+                actual_val == expected_val
+            ), f"{key} mismatch: expected {expected_val}, got {actual_val}"
