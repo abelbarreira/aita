@@ -3,7 +3,7 @@
 ```yaml
 AitA/
 │
-├── app/
+├── src/
 │ ├── __init__.py
 │ ├── main.py # Entry point for CLI
 │ ├── version.py # Versioning module
@@ -20,18 +20,22 @@ AitA/
 │
 ├── test/ # Unit tests
 │
+├── tools/ # Tools
+│
 ├── scripts/ # Run and test bash scripts
 │
 ├── docs/ # Project documentation
 │
+├── .github/
+│
 ├── .vscode/ # VS Code workspace and config
 │
-├── AitA.code-workspace # Workspace config
-├── README.md # This file
-├── requirements.txt # Runtime dependencies
-├── dev-requirements.txt # Development dependencies
-├── Makefile # Makefile commands (run, test, lint)
-├── CONTRIBUTING.md # How to contribute
+├── .env.example
+├── .gitignore # Ignore compiled and secret files
+├── .python-version
+├── aita.code-workspace # Workspace config
 ├── LICENSE # MIT License
-└── .gitignore # Ignore compiled and secret files
+├── pyproject.toml
+├── README.md
+└── ROADMAP.md
 ```

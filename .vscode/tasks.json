@@ -10,5 +10,14 @@
         "isDefault": true
       }
     },
+    {
+      "label": "Run App",
+      "type": "shell",
+      "command": "./scripts/run_app.sh",
+      "group": {
+        "kind": "none",
+        "isDefault": true
+      }
+    },
   ]
 }

@@ -32,7 +32,7 @@
 
 ## 🚀 Quick Start
 
-## 🛠 Setup Python Environment
+### 🛠 Setup Python Environment
 
 This project uses `pyenv` to manage Python versions and `pipx` for isolated tool installation.
 
@@ -43,6 +43,55 @@ To quickly set up the correct Python version:
 ```
 
 Use `hatch` commands to manage environments, testing, building, and publishing.
+
+### Run the CLI (without installing)
+
+Direct Python module invocation:
+
+```bash
+hatch run python -m aita.main --version
+```
+
+Via CLI script (using `[project.scripts]`):
+
+```bash
+hatch run aita -- --version
+```
+
+Interactive shell:
+
+```bash
+hatch shell
+aita --version
+exit
+```
+
+### (Optional) Make CLI available system-wide
+
+If you want to use the CLI everywhere (outside Hatch):
+
+```bash
+pip install -e .
+aita --version
+```
+
+## 🧹 Troubleshooting
+
+- If your CLI script isn't working after changes, prune the Hatch environment:
+
+```bash
+hatch env prune
+```
+
+### 💡 Useful Commands
+
+| Action                           | Command                             |
+|-----------------------------------|-------------------------------------|
+| Run CLI (module)                  | `hatch run python -m aita.main ...` |
+| Run CLI (script)                  | `hatch run aita -- ...`             |
+| Interactive shell                 | `hatch shell`                       |
+| Prune env (fix stale env issues)  | `hatch env prune`                   |
+| Install editable (system-wide)    | `pip install -e .`                  |
 
 ### 🧰 Tech Stack
 
@@ -73,6 +122,6 @@ For more, check out the [License File](LICENSE).
 
 ## 🤖 AI-Powered Collaboration
 
-This project is being developed with support and guidance from [ChatGPT](https://chatgpt.com/) by OpenAI.
+This project is being developed with support and guidance from [ChatGPT](https://chatgpt.com/) and [GitHub Copilot](https://github.com/copilot).
 
-Collaboration started in August 2025 using `ChatGPT-4.5`.
+Collaboration started in August 2025.
