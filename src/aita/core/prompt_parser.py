@@ -15,37 +15,55 @@ def parse_prompt(prompt: str) -> Dict:
         "duration": {"min": None, "max": None},
         "hotel": {},
         "flight": {},
-        "currency": None,
     }
 
-    if match := re.search(r'from "([^"]+)" to "([^"]+)"', prompt):
+    # 1. Match origin and destination
+    if match := re.search(
+        r"from\s+([A-Za-z\s]+?)\s+to\s+([A-Za-z\s]+?)(?:\s|$|in\b)",
+        prompt,
+        re.IGNORECASE,
+    ):
         result["origin"], result["destination"] = match.groups()
+        result["origin"] = result["origin"].strip()
+        result["destination"] = result["destination"].strip()
 
-    if match := re.search(r'area "([^"]+)"', prompt):
-        result["area"] = match.group(1)
+    # 2. Match area
+    if match := re.search(r'area "?([A-Za-z\s]+?)"?', prompt, re.IGNORECASE):
+        result["area"] = match.group(1).strip()
 
-    if match := re.search(r'in "([^"]+)"', prompt):
-        result["month"] = match.group(1)
+    # 3. Match month
+    if match := re.search(r'\bin "?([A-Za-z]+)"?', prompt, re.IGNORECASE):
+        result["month"] = match.group(1).strip()
 
-    if match := re.search(r'staying between "(\d+)" to "(\d+)" days', prompt):
+    # 4. Match duration
+    if match := re.search(
+        r'stay(?:ing)? between "?(\d+)"? to "?(\d+)"? days', prompt, re.IGNORECASE
+    ):
         result["duration"]["min"], result["duration"]["max"] = map(int, match.groups())
 
-    if match := re.search(r'Hotels:[\s\S]*?Within "([^"]+)" from the beach', prompt):
-        result["hotel"]["proximity_to_beach"] = match.group(1)
+    # 5. Match hotel proximity
+    if match := re.search(
+        r'Hotels?:[\s\S]*?within "?([\d\s\w]+?)"? from the beach', prompt, re.IGNORECASE
+    ):
+        result["hotel"]["proximity_to_beach"] = match.group(1).strip()
 
-    if match := re.search(r'"(\d+)" stars', prompt):
+    # 6. Match hotel stars
+    if match := re.search(r'"?(\d+)"?\s*stars?', prompt, re.IGNORECASE):
         result["hotel"]["stars"] = int(match.group(1))
 
-    if "All-Inclusive" in prompt:
+    # 7. Match board type
+    if re.search(r"\bAll[- ]Inclusive\b", prompt, re.IGNORECASE):
         result["hotel"]["board"] = "All-Inclusive"
 
-    if match := re.search(r'Departing between "([^"]+)" and "([^"]+)"', prompt):
+    # 8. Match flight departure time
+    if match := re.search(
+        r'Departing between "?([\d:apm\s]+)"? and "?([\d:apm\s]+)"?',
+        prompt,
+        re.IGNORECASE,
+    ):
         result["flight"]["departure_time"] = {
-            "from": match.group(1),
-            "to": match.group(2),
+            "from": match.group(1).strip(),
+            "to": match.group(2).strip(),
         }
-
-    if match := re.search(r"in ([A-Z]{3,})", prompt):
-        result["currency"] = match.group(1)
 
     return result

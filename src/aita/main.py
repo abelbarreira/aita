@@ -60,7 +60,7 @@ def main():
         for key in missing_keys:
             print(f" - {key}")
         exit(1)
-    print("All required .env keys are present.\n")
+    print("All required .env keys are present\n")
 
     # Parse prompt
     filters = parse_prompt(args.prompt)

@@ -14,7 +14,7 @@ echo "🚀 Running aita..."
 hatch run aita -- --version
 echo
 
-hatch run aita -- --prompt "Find me flights from Copenhagen to Palma de Mallorca in September..."
+hatch run aita -- --prompt "Find me flights from Copenhagen to Tokyo in September..."
 echo
 
 popd > /dev/null
