@@ -27,8 +27,8 @@ def parse_prompt(prompt: str) -> Dict:
         result["origin"] = result["origin"].strip()
         result["destination"] = result["destination"].strip()
 
-    # 2. Match area
-    if match := re.search(r'area "?([A-Za-z\s]+?)"?', prompt, re.IGNORECASE):
+    # 2. Match area (FIXED: use greedy match to capture full name)
+    if match := re.search(r'area "?([A-Za-z\s]+)"?', prompt, re.IGNORECASE):
         result["area"] = match.group(1).strip()
 
     # 3. Match month
