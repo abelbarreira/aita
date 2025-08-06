@@ -44,6 +44,14 @@ To quickly set up the correct Python version:
 
 Use `hatch` commands to manage environments, testing, building, and publishing.
 
+### Create/Update Hatch environment
+
+Ensuring Hatch environment is created/updated with dependencies from pyproject.toml..
+
+```bash
+hatch env create
+```
+
 ### Run the CLI (without installing)
 
 Direct Python module invocation:

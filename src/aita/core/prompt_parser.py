@@ -5,6 +5,7 @@ Prompt Parser: Extracts structured filters from natural language prompts.
 import re
 from typing import Dict
 
+
 def parse_prompt(prompt: str) -> Dict:
     result = {
         "origin": None,
@@ -14,7 +15,7 @@ def parse_prompt(prompt: str) -> Dict:
         "duration": {"min": None, "max": None},
         "hotel": {},
         "flight": {},
-        "currency": None
+        "currency": None,
     }
 
     if match := re.search(r'from "([^"]+)" to "([^"]+)"', prompt):
@@ -39,9 +40,12 @@ def parse_prompt(prompt: str) -> Dict:
         result["hotel"]["board"] = "All-Inclusive"
 
     if match := re.search(r'Departing between "([^"]+)" and "([^"]+)"', prompt):
-        result["flight"]["departure_time"] = {"from": match.group(1), "to": match.group(2)}
+        result["flight"]["departure_time"] = {
+            "from": match.group(1),
+            "to": match.group(2),
+        }
 
-    if match := re.search(r'in ([A-Z]{3,})', prompt):
+    if match := re.search(r"in ([A-Z]{3,})", prompt):
         result["currency"] = match.group(1)
 
     return result

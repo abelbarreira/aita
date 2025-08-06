@@ -5,21 +5,16 @@ ROOT_DIR=$SCRIPT_DIR/..
 
 pushd $ROOT_DIR > /dev/null
 
-# echo
-# echo "🚀 Running hatch env prune"
-# hatch env prune
+echo "🔎 Ensuring Hatch environment is created/updated with dependencies from pyproject.toml..."
+hatch env create
 
 echo
-echo "🚀 Running hatch run python -m aita.main --version"
-hatch run python -m aita.main --version
+echo "🚀 Running aita..."
 
-echo
-echo "🚀 Running hatch run aita -- --version"
 hatch run aita -- --version
+echo
 
-# Or directly in the terminal with Interactive Shell:
-# hatch shell
-# aita --version
-# exit
+hatch run aita -- --prompt "Find me flights from Copenhagen to Palma de Mallorca in September..."
+echo
 
 popd > /dev/null

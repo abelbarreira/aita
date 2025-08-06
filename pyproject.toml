@@ -9,6 +9,10 @@ description = "AitA - AI Travel Assistant"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 readme = "README.md"
 requires-python = ">=3.10"
+dependencies = [
+  "python-dotenv",
+  # ... other dependencies
+]
 
 [project.scripts]
 aita = "aita.main:main"
