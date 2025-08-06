@@ -11,6 +11,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
   "python-dotenv",
+  "requests",
   # ... other dependencies
 ]
 
@@ -18,7 +19,7 @@ dependencies = [
 aita = "aita.main:main"
 
 [tool.hatch.envs.default]
-dependencies = ["pytest"]
+dependencies = ["pytest", "ipython"]
 
 [tool.hatch.envs.default.scripts]
 test = "pytest test"

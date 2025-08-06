@@ -8,6 +8,7 @@ import argparse
 import os
 from aita.version import get_version
 from aita.core.prompt_parser import parse_prompt
+from aita.core.combo_engine import search_travel_combinations
 
 try:
     from dotenv import load_dotenv
@@ -67,6 +68,17 @@ def main():
     print("Parsed Filters:")
     for key, val in filters.items():
         print(f"{key}: {val}")
+
+    # After parsing filters
+    results = search_travel_combinations(filters)
+
+    print("\nFlight Results:")
+    for flight in results["flights"]:
+        print(flight)
+
+    print("\nHotel Results:")
+    for hotel in results["hotels"]:
+        print(hotel)
 
 
 if __name__ == "__main__":
