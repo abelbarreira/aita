@@ -29,11 +29,11 @@
     }
   },
   {
-    "prompt": "From Copenhagen to Rome staying between 5 to 10 days in July, looking for a 4 stars hotel in area Coliseo. All-Inclusive preferred.",
+    "prompt": "From Copenhagen to Rome staying between 5 to 10 days in July, looking for a 4 stars hotel in area Colosseum. All-Inclusive preferred.",
     "expected": {
       "origin": "Copenhagen",
       "destination": "Rome",
-      "area": "Coliseo",
+      "area": "Colosseum",
       "month": "July",
       "duration": {
         "min": 5,
