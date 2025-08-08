@@ -2,10 +2,8 @@
 Query Builder: Converts structured filters into API query parameters.
 """
 
-from typing import Dict
 
-
-def build_flight_query(filters: Dict) -> Dict:
+def build_flight_query(filters: dict) -> dict:
     return {
         "origin": filters.get("origin"),
         "destination": filters.get("destination"),
@@ -18,7 +16,7 @@ def build_flight_query(filters: Dict) -> Dict:
     }
 
 
-def build_hotel_query(filters: Dict) -> Dict:
+def build_hotel_query(filters: dict) -> dict:
     return {
         "destination": filters.get("destination"),
         "area": filters.get("area"),

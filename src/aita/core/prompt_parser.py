@@ -3,10 +3,9 @@ Prompt Parser: Extracts structured filters from natural language prompts.
 """
 
 import re
-from typing import Dict
 
 
-def parse_prompt(prompt: str) -> Dict:
+def parse_prompt(prompt: str) -> dict:
     result = {
         "origin": None,
         "destination": None,
