@@ -22,4 +22,11 @@ aita = "aita.main:main"
 dependencies = ["pytest", "ipython"]
 
 [tool.hatch.envs.default.scripts]
-test = "pytest test"
+test = "pytest"
+
+[tool.pytest.ini_options]
+testpaths = ["test"]            # same than 'pytest test'
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --strict-markers"
