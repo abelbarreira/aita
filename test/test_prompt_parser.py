@@ -4,7 +4,7 @@ from src.aita.core.prompt_parser import parse_prompt
 
 
 def load_test_cases():
-    with open("test/test_prompts.json", "r") as f:
+    with open("test/test_prompt_parser.json", "r") as f:
         return json.load(f)
 
 
