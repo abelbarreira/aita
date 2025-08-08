@@ -23,6 +23,7 @@ dependencies = [
   "pytest",
   "pytest-mock",
   "pytest-html",
+  "pytest-cov",
   "ipython",
   # Add any other testing-related tools/dependencies here
 ]
@@ -40,4 +41,15 @@ addopts = """
   --strict-config
   --strict-markers
   --html=test/reports/report.html
+  --cov=aita
+  --cov-report=term-missing
+  --cov-report=html:test/reports/coverage_html
   """ # Add -s to debug with print()
+
+[tool.coverage.run]
+data_file = "test/reports/.coverage-data"
+omit = ["test/*", "*/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
