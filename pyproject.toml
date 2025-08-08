@@ -25,8 +25,8 @@ dependencies = ["pytest", "ipython"]
 test = "pytest"
 
 [tool.pytest.ini_options]
-testpaths = ["test"]            # same than 'pytest test'
+testpaths = ["test"]                              # same than 'pytest test'
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
-addopts = "-v --strict-markers"
+addopts = "-vv --strict-config --strict-markers " # use -s to debug with print()
