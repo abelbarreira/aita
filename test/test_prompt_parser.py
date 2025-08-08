@@ -1,5 +1,5 @@
-import json
 import pytest
+import json
 from src.aita.core.prompt_parser import parse_prompt
 
 

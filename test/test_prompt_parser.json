@@ -44,5 +44,36 @@
         "board": "All-Inclusive"
       }
     }
+  },
+  {
+    "prompt": "Looking for hotels within 10 km from the beach in Miami.",
+    "expected": {
+      "area": null,
+      "duration": {
+        "min": null,
+        "max": null
+      },
+      "hotel": {
+        "proximity_to_beach": "10 km"
+      }
+    }
+  },
+  {
+    "prompt": "Find flights departing between 9am and 5pm from New York to Boston.",
+    "expected": {
+      "origin": "New York",
+      "destination": "Boston",
+      "duration": {
+        "min": null,
+        "max": null
+      },
+      "hotel": {},
+      "flight": {
+        "departure_time": {
+          "from": "9am",
+          "to": "5pm"
+        }
+      }
+    }
   }
 ]

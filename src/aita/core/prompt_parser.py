@@ -19,7 +19,7 @@ def parse_prompt(prompt: str) -> Dict:
 
     # 1. Match origin and destination
     if match := re.search(
-        r"from\s+([A-Za-z\s]+?)\s+to\s+([A-Za-z\s]+?)(?:\s|$|in\b)",
+        r"\bfrom\s+([A-Za-z\s]+?)\s+to\s+([A-Za-z\s]+?)(?:\s|$|in\b|\.)",
         prompt,
         re.IGNORECASE,
     ):
@@ -43,7 +43,9 @@ def parse_prompt(prompt: str) -> Dict:
 
     # 5. Match hotel proximity
     if match := re.search(
-        r'Hotels?:[\s\S]*?within "?([\d\s\w]+?)"? from the beach', prompt, re.IGNORECASE
+        r'hotels?\s+within\s+"?([\d\s\w]+)"?\s+from the beach',
+        prompt,
+        re.IGNORECASE,
     ):
         result["hotel"]["proximity_to_beach"] = match.group(1).strip()
 
