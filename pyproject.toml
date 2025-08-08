@@ -12,21 +12,32 @@ requires-python = ">=3.10"
 dependencies = [
   "python-dotenv",
   "requests",
-  # ... other dependencies
+  # Any other runtime dependencies here
 ]
 
 [project.scripts]
 aita = "aita.main:main"
 
 [tool.hatch.envs.default]
-dependencies = ["pytest", "ipython"]
+dependencies = [
+  "pytest",
+  "pytest-mock",
+  "pytest-html",
+  "ipython",
+  # Add any other testing-related tools/dependencies here
+]
 
 [tool.hatch.envs.default.scripts]
 test = "pytest"
 
 [tool.pytest.ini_options]
-testpaths = ["test"]                              # same than 'pytest test'
+testpaths = ["test"] # same than 'pytest test'
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
-addopts = "-vv --strict-config --strict-markers " # use -s to debug with print()
+addopts = """
+  -vv
+  --strict-config
+  --strict-markers
+  --html=test/reports/report.html
+  """ # Add -s to debug with print()
