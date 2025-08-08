@@ -1,0 +1,8 @@
+{
+  "test_combo_engine": true,
+  "test_flights_api": true,
+  "test_hotels_api": true,
+  "test_prompt_parser": true,
+  "test_query_builder": true,
+  "test_main": true
+}

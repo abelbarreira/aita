@@ -29,7 +29,7 @@ dependencies = [
 ]
 
 [tool.hatch.envs.default.scripts]
-test = "pytest"
+test = "coverage erase && pytest"
 
 [tool.pytest.ini_options]
 testpaths = ["test"] # same than 'pytest test'

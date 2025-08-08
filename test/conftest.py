@@ -1,4 +1,5 @@
 import subprocess
+import json
 import os
 from datetime import datetime
 from aita.version import get_version
@@ -43,3 +44,23 @@ def pytest_html_results_summary(prefix, summary, postfix):
             f"<br>",
         ]
     )
+
+
+def pytest_collection_modifyitems(config, items):
+    # Load the test filter file
+    with open(os.path.join(os.path.dirname(__file__), "applicable_tests.json")) as f:
+        test_filters = json.load(f)
+
+    # Filter out test files that are disabled
+    selected = []
+    deselected = []
+    for item in items:
+        # Get filename without extension, e.g., test_prompt_parser
+        file_key = os.path.splitext(os.path.basename(item.fspath))[0]
+        if file_key in test_filters and test_filters[file_key]:
+            selected.append(item)
+        else:
+            deselected.append(item)
+
+    items[:] = selected
+    config.hook.pytest_deselected(items=deselected)
