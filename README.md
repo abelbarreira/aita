@@ -20,11 +20,19 @@
 
 ---
 
-## 🔧 Project Structure
+## Documentation
+
+Refer to [SUMMARY](docs/SUMMARY.md)
+
+### 🔧 Project Setup
+
+[Project Setup](docs/setup.md)
+
+### 🔧 Project Structure
 
 [Project Structure](docs/project_structure.md)
 
-## 🧠 Example Prompts
+### 🧠 Example Prompts
 
 [Example Prompts](docs/example_prompts.md)
 
@@ -46,7 +54,7 @@ Use `hatch` commands to manage environments, testing, building, and publishing.
 
 ### Create/Update Hatch environment
 
-Ensuring Hatch environment is created/updated with dependencies from pyproject.toml..
+Ensuring Hatch environment is created/updated with dependencies from pyproject.toml:
 
 ```bash
 hatch env create
@@ -110,15 +118,15 @@ hatch env prune
 - Tests: Pytest
 - Linting: flake8 + black
 
-## Documentation
-
-Refer to [SUMMARY](docs/SUMMARY.md).
+---
 
 ## 🤝 Contributing
 
 If you have suggestions for how Open Source Projects Template could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
-For more, check out the [Contributing Guide](.github/CONTRIBUTING.md).
+For more, check out the [Contributing Guide](.github/CONTRIBUTING.md)
+
+---
 
 ## 🛡️ License
 
@@ -126,7 +134,9 @@ MIT License
 
 Copyright (c) 2025 abelbarreira
 
-For more, check out the [License File](LICENSE).
+For more, check out the [License File](LICENSE)
+
+---
 
 ## 🤖 AI-Powered Collaboration
 
