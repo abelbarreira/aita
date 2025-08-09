@@ -1,11 +1,22 @@
 {
-    "folders": [
-        {
-            "path": "."
-        }
-    ],
-    "settings": {
-        "cSpell.language": "en",
-        "task.autoDetect": "off",
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "cSpell.language": "en",
+    "task.autoDetect": "off",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.trimAutoWhitespace": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "[markdown]": {
+      "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
+    "markdown.extension.tableFormatter.enabled": true,
+    "markdown.extension.tableFormatter.normalizeIndentation": true
+  }
 }
