@@ -94,12 +94,12 @@ hatch env prune
 ### 💡 Useful Commands
 
 | Action                           | Command                             |
-|-----------------------------------|-------------------------------------|
-| Run CLI (module)                  | `hatch run python -m aita.main ...` |
-| Run CLI (script)                  | `hatch run aita -- ...`             |
-| Interactive shell                 | `hatch shell`                       |
-| Prune env (fix stale env issues)  | `hatch env prune`                   |
-| Install editable (system-wide)    | `pip install -e .`                  |
+| -------------------------------- | ----------------------------------- |
+| Run CLI (module)                 | `hatch run python -m aita.main ...` |
+| Run CLI (script)                 | `hatch run aita -- ...`             |
+| Interactive shell                | `hatch shell`                       |
+| Prune env (fix stale env issues) | `hatch env prune`                   |
+| Install editable (system-wide)   | `pip install -e .`                  |
 
 ### 🧰 Tech Stack
 
