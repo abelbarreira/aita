@@ -7,10 +7,7 @@
   "settings": {
     "cSpell.language": "en",
     "task.autoDetect": "off",
-    "editor.tabSize": 2,
     "editor.detectIndentation": false,
-    "editor.insertSpaces": true,
-    "editor.trimAutoWhitespace": true,
     "editor.formatOnSave": true,
     "files.autoSave": "onFocusChange",
     "[markdown]": {
