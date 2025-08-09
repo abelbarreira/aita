@@ -1,8 +1,10 @@
 .temp/
+.vscode/settings.json
+test/reports/
+
 .env
 
+# Python
 __pycache__/
 *.pyc
 dist
-
-test/reports/

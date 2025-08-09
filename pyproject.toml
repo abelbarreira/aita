@@ -30,6 +30,7 @@ dependencies = [
 
 [tool.hatch.envs.default.scripts]
 test = "coverage erase && pytest"
+set-vscode-interpreter = "python scripts/generate_vscode_settings.py"
 
 [tool.pytest.ini_options]
 testpaths = ["test"] # same than 'pytest test'
