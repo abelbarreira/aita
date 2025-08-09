@@ -40,6 +40,10 @@ Refer to [SUMMARY](docs/SUMMARY.md)
 
 ## 🚀 Quick Start
 
+### Open Project
+
+If used Visual Studio Code, use `aita.code-workspace` to open the project so it gets its workspace settings.
+
 ### 🛠 Setup Python Environment
 
 This project uses `pyenv` to manage Python versions and `pipx` for isolated tool installation.
