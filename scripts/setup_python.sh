@@ -39,6 +39,15 @@ else
   pipx upgrade hatch
 fi
 
+echo "🔎 Ensuring Hatch environment is created/updated with dependencies from pyproject.toml..."
+hatch env create
+
+echo
+echo "🚀 Generating VSCode Settings.."
+
+hatch run set-vscode-interpreter
+echo
+
 popd > /dev/null
 
 echo "✅ Python environment setup complete."
