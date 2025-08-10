@@ -14,6 +14,30 @@
       "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
     "markdown.extension.tableFormatter.enabled": true,
-    "markdown.extension.tableFormatter.normalizeIndentation": true
+    "markdown.extension.tableFormatter.normalizeIndentation": true,
+    "markdown.extension.showActionButtons": false,
+    "actionButtons": {
+      "defaultColor": "white",
+      "loadNpmCommands": false,
+      "inheritGlobalCommands": false,
+      "commands": [
+        {
+          "name": "$(play) Run App", // "$(play)" adds a play icon
+          "command": "./scripts/run_app.sh",
+          "color": "yellow",
+          "singleInstance": true, // Reuse the same terminal
+          "tooltip": "Run AitA app",
+          "cwd": "${workspaceFolder}" // Run from project root
+        },
+        {
+          "name": "$(play) Run Tests", // "$(play)" adds a play icon
+          "command": "./scripts/run_tests.sh",
+          "color": "yellow",
+          "singleInstance": true, // Reuse the same terminal
+          "tooltip": "Run AitA tests",
+          "cwd": "${workspaceFolder}" // Run from project root
+        },
+      ]
+    }
   }
 }

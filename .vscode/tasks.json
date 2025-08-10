@@ -20,7 +20,7 @@
       }
     },
     {
-      "label": "Test App",
+      "label": "Run Tests",
       "type": "shell",
       "command": "./scripts/run_tests.sh",
       "group": {
