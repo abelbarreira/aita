@@ -1,0 +1,133 @@
+[
+  {
+    "prompt": "Find me direct Flights and All-Inclusive Hotels to travel from Copenhagen to Palma de Mallorca, area Playa Magaluf, starting from 1st November, with a flexibility of 3 days, staying between 7 to 10 days, with Flights departing between 08:00 and 19:00 for both directions, in a Hotel with 4 stars, within 300m from the beach.",
+    "expected": {
+      "origin": "Copenhagen",
+      "destination": "Palma de Mallorca",
+      "area": "Playa Magaluf",
+      "start_date": "1st November",
+      "flexibility": 3,
+      "duration_min": 7,
+      "duration_max": 10,
+      "hotel": {
+        "stars": 4,
+        "all_inclusive": true,
+        "distance_to_beach": 300
+      },
+      "flight": {
+        "departure_time_min": "08:00",
+        "departure_time_max": "19:00",
+        "direct": true
+      }
+    }
+  },
+  {
+    "prompt": "Find me Flights and Hotels to travel from New York to Los Angeles, area Downtown, starting from 15th December, with a flexibility of 5 days, staying between 3 to 5 days, with Flights departing between 06:00 and 12:00, in a Hotel with 5 stars, within 1km from the beach.",
+    "expected": {
+      "origin": "New York",
+      "destination": "Los Angeles",
+      "area": "Downtown",
+      "start_date": "15th December",
+      "flexibility": 5,
+      "duration_min": 3,
+      "duration_max": 5,
+      "hotel": {
+        "stars": 5,
+        "all_inclusive": false,
+        "distance_to_beach": 1000
+      },
+      "flight": {
+        "departure_time_min": "06:00",
+        "departure_time_max": "12:00",
+        "direct": false
+      }
+    }
+  },
+  {
+    "prompt": "Looking for Flights and Hotels to travel from Paris to Tokyo, area Shinjuku, starting from 20th March, with a flexibility of 2 days, staying between 10 to 14 days, with Flights departing between 10:00 and 22:00, in a Hotel with 3 stars.",
+    "expected": {
+      "origin": "Paris",
+      "destination": "Tokyo",
+      "area": "Shinjuku",
+      "start_date": "20th March",
+      "flexibility": 2,
+      "duration_min": 10,
+      "duration_max": 14,
+      "hotel": {
+        "stars": 3,
+        "all_inclusive": false
+      },
+      "flight": {
+        "departure_time_min": "10:00",
+        "departure_time_max": "22:00",
+        "direct": false
+      }
+    }
+  },
+  {
+    "prompt": "Find me Flights and Hotels to travel from Berlin to Sydney, area Bondi Beach, starting from 5th January, with a flexibility of 7 days, staying between 14 to 21 days, with Flights departing between 09:00 and 18:00, in a Hotel with 4 stars, within 200m from the beach.",
+    "expected": {
+      "origin": "Berlin",
+      "destination": "Sydney",
+      "area": "Bondi Beach",
+      "start_date": "5th January",
+      "flexibility": 7,
+      "duration_min": 14,
+      "duration_max": 21,
+      "hotel": {
+        "stars": 4,
+        "all_inclusive": false,
+        "distance_to_beach": 200
+      },
+      "flight": {
+        "departure_time_min": "09:00",
+        "departure_time_max": "18:00",
+        "direct": false
+      }
+    }
+  },
+  {
+    "prompt": "Find me direct Flights and Hotels to travel from London to Dubai, area Marina, starting from 10th February, with a flexibility of 4 days, staying between 5 to 8 days, with Flights departing between 07:00 and 15:00, in a Hotel with 5 stars, within 300m from the beach.",
+    "expected": {
+      "origin": "London",
+      "destination": "Dubai",
+      "area": "Marina",
+      "start_date": "10th February",
+      "flexibility": 4,
+      "duration_min": 5,
+      "duration_max": 8,
+      "hotel": {
+        "stars": 5,
+        "all_inclusive": false,
+        "distance_to_beach": 300
+      },
+      "flight": {
+        "departure_time_min": "07:00",
+        "departure_time_max": "15:00",
+        "direct": true
+      }
+    }
+  },
+  {
+    "prompt": "Find me Flights and Hotels to travel from Madrid to Cancun, area Hotel Zone, starting from 25th April, with a flexibility of 6 days, staying between 10 to 12 days, with Flights departing between 08:00 and 20:00, in a Hotel with 4 stars, within 100m from the beach.",
+    "expected": {
+      "origin": "Madrid",
+      "destination": "Cancun",
+      "area": "Hotel Zone",
+      "start_date": "25th April",
+      "flexibility": 6,
+      "duration_min": 10,
+      "duration_max": 12,
+      "hotel": {
+        "stars": 4,
+        "all_inclusive": false,
+        "distance_to_beach": 100
+      },
+      "flight": {
+        "departure_time_min": "08:00",
+        "departure_time_max": "20:00",
+        "direct": false
+      }
+    }
+  }
+]
