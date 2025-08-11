@@ -1,6 +1,6 @@
 import pytest
 import json
-from src.aita.core.filters import Filters
+from src.aita.core.filters import Filters, FlightFilters, HotelFilters
 
 
 def load_test_cases():
@@ -95,3 +95,88 @@ def test_matches(test_case):
         assert not filter_instance_1.matches(
             filter_instance_2
         ), "Filters instances should not match after modification"
+
+
+def test_matches_none_attributes():
+    # Only origin is set, rest are None
+    f1 = Filters(origin="A", destination=None)
+    f2 = Filters(origin="A", destination=None)
+    assert f1.matches(f2) is True
+
+    # One has None, one has value
+    f3 = Filters(origin="A", destination="B")
+    f4 = Filters(origin="A", destination=None)
+    assert f3.matches(f4) is True  # destination is ignored if one is None
+
+    # Both set, but different
+    f5 = Filters(origin="A", destination="B")
+    f6 = Filters(origin="A", destination="C")
+    assert f5.matches(f6) is False
+
+
+def test_check_missing_filters_nested():
+    f = Filters()
+    missing = f.check_missing_filters()
+    assert "origin" in missing
+    assert "flight.departure_time_min" in missing
+    assert "hotel.stars" in missing
+
+
+def test_pretty_print_covers_all(capsys):
+    f = Filters(
+        origin="A",
+        destination="B",
+        area="C",
+        start_date="1 January",
+        duration_min=1,
+        duration_max=2,
+        flexibility=1,
+        flight=FlightFilters(
+            departure_time_min="08:00", departure_time_max="10:00", direct=True
+        ),
+        hotel=HotelFilters(stars=5, all_inclusive=True, distance_to_beach=100.0),
+    )
+    f.pretty_print()
+    out = capsys.readouterr().out
+    assert "origin: A" in out
+    assert "flight:" in out
+    assert "hotel:" in out
+
+
+def test_matches_area_mismatch():
+    f1 = Filters(area="A")
+    f2 = Filters(area="B")
+    assert f1.matches(f2) is False  # covers line 149
+
+
+def test_matches_start_date_mismatch():
+    f1 = Filters(start_date="1 January")
+    f2 = Filters(start_date="2 January")
+    assert f1.matches(f2) is False  # covers line 151
+
+
+def test_matches_flight_departure_time_min_mismatch():
+    f1 = Filters(flight=FlightFilters(departure_time_min="08:00"))
+    f2 = Filters(flight=FlightFilters(departure_time_min="09:00"))
+    assert f1.matches(f2) is False  # covers line 173
+
+
+def test_matches_hotel_all_inclusive_mismatch():
+    f1 = Filters(hotel=HotelFilters(all_inclusive=True))
+    f2 = Filters(hotel=HotelFilters(all_inclusive=False))
+    # Both are not None, so this will trigger the mismatch
+    assert f1.matches(f2) is False
+
+
+def test_matches_hotel_distance_to_beach_greater():
+    f1 = Filters(hotel=HotelFilters(distance_to_beach=100))
+    f2 = Filters(hotel=HotelFilters(distance_to_beach=50))
+    # Both are not None, and 100 > 50, so this will trigger the mismatch
+    assert f1.matches(f2) is False
+
+
+def test_matches_hotel_all_inclusive_mismatch():
+    f1 = Filters(hotel=HotelFilters(all_inclusive=True))
+    f2 = Filters(hotel=HotelFilters(all_inclusive=False))
+    # Both are not None, so this will trigger the mismatch
+    assert f1.matches(f2) is False

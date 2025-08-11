@@ -185,12 +185,18 @@ class Filters:
             and self.hotel.stars != other.hotel.stars
         ):
             return False
-        if self.hotel.all_inclusive and other.hotel.all_inclusive:
-            if self.hotel.all_inclusive != other.hotel.all_inclusive:
-                return False
-        if self.hotel.distance_to_beach and other.hotel.distance_to_beach:
-            if self.hotel.distance_to_beach < other.hotel.distance_to_beach:
-                return False
+        if (
+            self.hotel.all_inclusive is not None
+            and other.hotel.all_inclusive is not None
+            and self.hotel.all_inclusive != other.hotel.all_inclusive
+        ):
+            return False
+        if (
+            self.hotel.distance_to_beach is not None
+            and other.hotel.distance_to_beach is not None
+            and self.hotel.distance_to_beach > other.hotel.distance_to_beach
+        ):
+            return False
 
         # If all checks pass, the filters match
         return True

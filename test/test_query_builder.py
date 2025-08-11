@@ -1,59 +1,96 @@
 import pytest
-from aita.core.query_builder import build_flight_query, build_hotel_query
+from datetime import datetime
+from aita.core.filters import Filters, FlightFilters, HotelFilters
+from aita.core.query_dates import QueryDates
+from aita.core.query_builder import QueryFlights, QueryHotels
 
 
 @pytest.fixture
-def full_filters():
-    return {
-        "origin": "Copenhagen",
-        "destination": "Tokyo",
-        "month": "September",
-        "duration": {"min": 5, "max": 10},
-        "flight": {"departure_time": {"from": "08:00", "to": "12:00"}},
-        "hotel": {"proximity_to_beach": "500m", "stars": 4, "board": "All-Inclusive"},
-        "area": "Shibuya",
-        "currency": "EUR",
-    }
+def filters_obj():
+    return Filters(
+        origin="Copenhagen",
+        destination="Tokyo",
+        area="Shibuya",
+        start_date="5 September",
+        duration_min=5,
+        duration_max=10,
+        flexibility=1,
+        flight=FlightFilters(
+            departure_time_min="08:00",
+            departure_time_max="12:00",
+            direct=True,
+        ),
+        hotel=HotelFilters(
+            stars=4,
+            all_inclusive=True,
+            distance_to_beach=500.0,
+        ),
+    )
 
 
-def test_build_flight_query(full_filters):
-    query = build_flight_query(full_filters)
+@pytest.fixture
+def query_dates_obj():
+    return QueryDates(
+        start_date=datetime(2025, 9, 5),
+        end_date=datetime(2025, 9, 15),
+    )
+
+
+def test_query_flights_from_filters(filters_obj, query_dates_obj):
+    qf = QueryFlights.from_filters(filters_obj, query_dates_obj)
+    assert qf.origin == "Copenhagen"
+    assert qf.destination == "Tokyo"
+    assert qf.flight.departure_time_min == "08:00"
+    assert qf.query_dates == query_dates_obj
+
+
+def test_query_flights_build_query(filters_obj, query_dates_obj):
+    qf = QueryFlights.from_filters(filters_obj, query_dates_obj)
+    query = qf.build_query_flights()
     assert query == {
         "origin": "Copenhagen",
         "destination": "Tokyo",
-        "month": "September",
-        "duration_min": 5,
-        "duration_max": 10,
-        "departure_time_from": "08:00",
-        "departure_time_to": "12:00",
-        "currency": "EUR",
+        "start_date": "2025-09-05",
+        "end_date": "2025-09-15",
+        "departure_time_min": "08:00",
+        "departure_time_max": "12:00",
+        "direct": True,
     }
 
 
-def test_build_hotel_query(full_filters):
-    query = build_hotel_query(full_filters)
+def test_query_hotels_from_filters(filters_obj, query_dates_obj):
+    qh = QueryHotels.from_filters(filters_obj, query_dates_obj)
+    assert qh.destination == "Tokyo"
+    assert qh.area == "Shibuya"
+    assert qh.hotel.stars == 4
+    assert qh.query_dates == query_dates_obj
+
+
+def test_query_hotels_build_query(filters_obj, query_dates_obj):
+    qh = QueryHotels.from_filters(filters_obj, query_dates_obj)
+    query = qh.build_query_hotels()
     assert query == {
         "destination": "Tokyo",
         "area": "Shibuya",
-        "proximity_to_beach": "500m",
+        "start_date": "2025-09-05",
+        "end_date": "2025-09-15",
         "stars": 4,
-        "board": "All-Inclusive",
+        "all_inclusive": True,
+        "distance_to_beach": 500.0,
     }
 
 
-def test_missing_optional_fields():
-    minimal_filters = {
-        "origin": "Paris",
-        "destination": "Rome",
-        "duration": {"min": None, "max": None},
-        "flight": {},
-        "hotel": {},
-    }
+def test_query_flights_defaults(query_dates_obj):
+    qf = QueryFlights(query_dates=query_dates_obj)
+    query = qf.build_query_flights()
+    assert query["origin"] is None
+    assert query["departure_time_min"] is None
+    assert query["direct"] is None
 
-    flight_query = build_flight_query(minimal_filters)
-    assert flight_query["origin"] == "Paris"
-    assert flight_query["departure_time_from"] is None
 
-    hotel_query = build_hotel_query(minimal_filters)
-    assert hotel_query["stars"] is None
-    assert hotel_query["board"] is None
+def test_query_hotels_defaults(query_dates_obj):
+    qh = QueryHotels(query_dates=query_dates_obj)
+    query = qh.build_query_hotels()
+    assert query["destination"] is None
+    assert query["stars"] is None
+    assert query["all_inclusive"] is None
