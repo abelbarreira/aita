@@ -2,7 +2,7 @@ import pytest
 import json
 from datetime import datetime
 from aita.core.query_dates import generate_query_dates
-from aita.core.filters import Filter
+from aita.core.filters import Filters
 
 
 def load_test_vectors():
@@ -14,7 +14,7 @@ def load_test_vectors():
 
     # Convert JSON data into Python objects
     for vector in test_vectors:
-        vector["filter_obj"] = Filter(**vector["filter_obj"])
+        vector["filter_obj"] = Filters(**vector["filter_obj"])
     return test_vectors
 
 
@@ -63,8 +63,8 @@ def test_generate_query_dates_missing_parameters():
     """
     Test that generate_query_dates raises a ValueError for missing parameters.
     """
-    # Create a Filter object with missing parameters
-    filter_obj = Filter(
+    # Create a Filters object with missing parameters
+    filter_obj = Filters(
         start_date=None,
         flexibility=2,
         duration_min=3,
@@ -74,7 +74,7 @@ def test_generate_query_dates_missing_parameters():
     # Expect a ValueError
     with pytest.raises(
         ValueError,
-        match="Filter object must have start_date, flexibility, duration_min, and duration_max defined.",
+        match="Filters object must have start_date, flexibility, duration_min, and duration_max defined.",
     ):
         generate_query_dates(filter_obj)
 
@@ -83,8 +83,8 @@ def test_generate_query_dates_edge_case():
     """
     Test generate_query_dates with edge case values (e.g., flexibility = 0, duration_min = duration_max).
     """
-    # Create a Filter object with edge case values
-    filter_obj = Filter(
+    # Create a Filters object with edge case values
+    filter_obj = Filters(
         start_date="15 December",
         flexibility=0,
         duration_min=5,

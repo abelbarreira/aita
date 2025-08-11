@@ -51,7 +51,7 @@ def pytest_collection_modifyitems(config, items):
     with open(os.path.join(os.path.dirname(__file__), "applicable_tests.json")) as f:
         test_filters = json.load(f)
 
-    # Filter out test files that are disabled
+    # Filters out test files that are disabled
     selected = []
     deselected = []
     for item in items:

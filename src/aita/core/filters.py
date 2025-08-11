@@ -27,7 +27,7 @@ class HotelFilter:
 
 
 @dataclass
-class Filter:
+class Filters:
     """
     Represents a filter with a name and a list of values.
     """
@@ -43,9 +43,9 @@ class Filter:
     hotel: HotelFilter = field(default_factory=HotelFilter)
 
     @classmethod
-    def from_prompt(cls, prompt: str) -> Filter:
+    def from_prompt(cls, prompt: str) -> Filters:
         """
-        Parses a natural language prompt and returns a populated Filter instance.
+        Parses a natural language prompt and returns a populated Filters instance.
         """
         # Initialize the filter object
         filter_instance = cls()
@@ -132,9 +132,9 @@ class Filter:
 
         return filter_instance
 
-    def matches(self, other: Filter) -> bool:
+    def matches(self, other: Filters) -> bool:
         """
-        Compares this Filter instance with another Filter instance to check if they match.
+        Compares this Filters instance with another Filters instance to check if they match.
         """
         # Compare basic attributes
         if self.origin and other.origin and self.origin != other.origin:
@@ -197,7 +197,7 @@ class Filter:
 
     def check_missing_filters(self) -> list[str]:
         """
-        Checks if any filter in the Filter instance are None and returns a list of missing attributes.
+        Checks if any filter in the Filters instance are None and returns a list of missing attributes.
         """
         missing = []
 

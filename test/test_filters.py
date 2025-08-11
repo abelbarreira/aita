@@ -1,6 +1,6 @@
 import pytest
 import json
-from src.aita.core.filters import Filter
+from src.aita.core.filters import Filters
 
 
 def load_test_cases():
@@ -14,15 +14,15 @@ def load_test_cases():
 @pytest.mark.parametrize("test_case", load_test_cases())
 def test_from_prompt(test_case):
     """
-    Tests the from_prompt method of the Filter class.
+    Tests the from_prompt method of the Filters class.
     """
     prompt = test_case["prompt"]
     expected = test_case["expected"]
 
-    # Create a Filter instance from the prompt
-    filter_instance = Filter.from_prompt(prompt)
+    # Create a Filters instance from the prompt
+    filter_instance = Filters.from_prompt(prompt)
 
-    # Validate the attributes of the Filter instance
+    # Validate the attributes of the Filters instance
     for key, expected_val in expected.items():
         if isinstance(expected_val, dict):
             # Handle nested attributes (e.g., hotel, flight)
@@ -50,13 +50,13 @@ def test_from_prompt(test_case):
 @pytest.mark.parametrize("test_case", load_test_cases())
 def test_check_missing_filters(test_case):
     """
-    Tests the check_missing_filters method of the Filter class.
+    Tests the check_missing_filters method of the Filters class.
     """
     prompt = test_case["prompt"]
     expected = test_case["expected"]
 
-    # Create a Filter instance from the prompt
-    filter_instance = Filter.from_prompt(prompt)
+    # Create a Filters instance from the prompt
+    filter_instance = Filters.from_prompt(prompt)
 
     # Check for missing attributes
     missing_attributes = filter_instance.check_missing_filters()
@@ -76,20 +76,22 @@ def test_check_missing_filters(test_case):
 @pytest.mark.parametrize("test_case", load_test_cases())
 def test_matches(test_case):
     """
-    Tests the matches method of the Filter class.
+    Tests the matches method of the Filters class.
     """
     prompt = test_case["prompt"]
 
-    # Create two Filter instances from the same prompt
-    filter_instance_1 = Filter.from_prompt(prompt)
-    filter_instance_2 = Filter.from_prompt(prompt)
+    # Create two Filters instances from the same prompt
+    filter_instance_1 = Filters.from_prompt(prompt)
+    filter_instance_2 = Filters.from_prompt(prompt)
 
     # Ensure that the two instances match
-    assert filter_instance_1.matches(filter_instance_2), "Filter instances should match"
+    assert filter_instance_1.matches(
+        filter_instance_2
+    ), "Filters instances should match"
 
     # Modify one of the attributes in the second instance to ensure it no longer matches
     if filter_instance_2.origin:
         filter_instance_2.origin = "ModifiedOrigin"
         assert not filter_instance_1.matches(
             filter_instance_2
-        ), "Filter instances should not match after modification"
+        ), "Filters instances should not match after modification"

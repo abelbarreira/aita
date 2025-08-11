@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict
 from datetime import datetime, timedelta
-from aita.core.filters import Filter
+from aita.core.filters import Filters
 
 
 @dataclass
@@ -15,12 +15,12 @@ class QueryDates:
     end_date: datetime
 
 
-def generate_query_dates(filter_obj: Filter) -> Dict[int, QueryDates]:
+def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
     """
-    Generates a dictionary of QueryDates keyed by ID based on the Filter parameters.
+    Generates a dictionary of QueryDates keyed by ID based on the Filters parameters.
 
     Args:
-        filter_obj (Filter): The filter object containing date-related parameters.
+        filter_obj (Filters): The filter object containing date-related parameters.
 
     Returns:
         Dict[int, QueryDates]: A dictionary of QueryDates keyed by ID.
@@ -32,7 +32,7 @@ def generate_query_dates(filter_obj: Filter) -> Dict[int, QueryDates]:
         or filter_obj.duration_max is None
     ):
         raise ValueError(
-            "Filter object must have start_date, flexibility, duration_min, and duration_max defined."
+            "Filters object must have start_date, flexibility, duration_min, and duration_max defined."
         )
 
     # Add a default year (e.g., 2025) to the start_date to avoid ambiguity
