@@ -5,9 +5,9 @@ from typing import Optional
 
 
 @dataclass
-class FlightFilter:
+class FlightFilters:
     """
-    Represents a flight filter with its details.
+    Represents a flight filters with its details.
     """
 
     departure_time_min: Optional[str] = None
@@ -16,9 +16,9 @@ class FlightFilter:
 
 
 @dataclass
-class HotelFilter:
+class HotelFilters:
     """
-    Represents a hotel filter with its details.
+    Represents a hotel filters with its details.
     """
 
     stars: Optional[int] = None
@@ -39,8 +39,8 @@ class Filters:
     duration_min: Optional[int] = None
     duration_max: Optional[int] = None
     flexibility: Optional[int] = None
-    flight: FlightFilter = field(default_factory=FlightFilter)
-    hotel: HotelFilter = field(default_factory=HotelFilter)
+    flight: FlightFilters = field(default_factory=FlightFilters)
+    hotel: HotelFilters = field(default_factory=HotelFilters)
 
     @classmethod
     def from_prompt(cls, prompt: str) -> Filters:
