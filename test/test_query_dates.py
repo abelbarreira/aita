@@ -103,3 +103,21 @@ def test_generate_query_dates_edge_case():
     single_query = query_dates[0]
     assert single_query.start_date == datetime.strptime("15 December 2025", "%d %B %Y")
     assert single_query.end_date == datetime.strptime("20 December 2025", "%d %B %Y")
+
+
+def test_pretty_print_query_dates(capsys):
+    """
+    Test pretty_print_query_dates prints the expected output.
+    """
+    from datetime import datetime
+    from aita.core.query_dates import QueryDates, pretty_print_query_dates
+
+    query_dates = {
+        0: QueryDates(start_date=datetime(2025, 1, 5), end_date=datetime(2025, 1, 12)),
+        1: QueryDates(start_date=datetime(2025, 1, 6), end_date=datetime(2025, 1, 13)),
+    }
+
+    pretty_print_query_dates(query_dates)
+    captured = capsys.readouterr()
+    assert "ID 0: Start = 2025-01-05, End = 2025-01-12" in captured.out
+    assert "ID 1: Start = 2025-01-06, End = 2025-01-13" in captured.out

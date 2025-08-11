@@ -7,8 +7,12 @@ Main entry point for AitA - AI Travel Assistant
 import argparse
 import os
 from aita.version import get_version
-from aita.core.prompt_parser import parse_prompt
-from aita.core.combo_engine import search_travel_combinations
+from aita.core.filters import Filters
+from aita.core.query_dates import (
+    generate_query_dates,
+    pretty_print_query_dates,
+    QueryDates,
+)
 
 try:
     from dotenv import load_dotenv
@@ -61,24 +65,17 @@ def main():
         for key in missing_keys:
             print(f" - {key}")
         exit(1)
-    print("All required .env keys are present\n")
+    print("All required .env keys are present.")
 
     # Parse prompt
-    filters = parse_prompt(args.prompt)
-    print("Parsed Filters:")
-    for key, val in filters.items():
-        print(f"{key}: {val}")
+    filters: Filters = Filters.from_prompt(args.prompt)
+    print("\nParsed Filters:")
+    filters.pretty_print()
 
-    # After parsing filters
-    results = search_travel_combinations(filters)
-
-    print("\nFlight Results:")
-    for flight in results["flights"]:
-        print(flight)
-
-    print("\nHotel Results:")
-    for hotel in results["hotels"]:
-        print(hotel)
+    # Generate query dates
+    print("\nQuery Dates:")
+    query_dates: dict[int, QueryDates] = generate_query_dates(filters)
+    pretty_print_query_dates(query_dates)
 
 
 if __name__ == "__main__":

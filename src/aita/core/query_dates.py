@@ -1,5 +1,6 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
+import re
+from dataclasses import dataclass
 from typing import Dict
 from datetime import datetime, timedelta
 from aita.core.filters import Filters
@@ -35,8 +36,9 @@ def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
             "Filters object must have start_date, flexibility, duration_min, and duration_max defined."
         )
 
-    # Add a default year (e.g., 2025) to the start_date to avoid ambiguity
-    start_date_str = f"{filter_obj.start_date} 2025"
+    # Remove ordinal suffixes from day (e.g., '5th' -> '5')
+    start_date_clean = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", filter_obj.start_date)
+    start_date_str = f"{start_date_clean} 2025"
     start_date = datetime.strptime(start_date_str, "%d %B %Y")
     flexibility = filter_obj.flexibility
     duration_min = filter_obj.duration_min
@@ -56,3 +58,13 @@ def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
             query_id += 1
 
     return query_dates
+
+
+def pretty_print_query_dates(query_dates: Dict[int, QueryDates]) -> None:
+    """
+    Nicely prints all entries in a Dict[int, QueryDates].
+    """
+    for key, qd in query_dates.items():
+        print(
+            f"ID {key}: Start = {qd.start_date.strftime('%Y-%m-%d')}, End = {qd.end_date.strftime('%Y-%m-%d')}"
+        )

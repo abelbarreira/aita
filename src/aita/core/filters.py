@@ -225,3 +225,20 @@ class Filters:
                 missing.append(f"hotel.{attr}")
 
         return missing
+
+    def pretty_print(self) -> None:
+        """
+        Nicely prints all filter values, including nested HotelFilters and FlightFilters.
+        """
+
+        def print_dataclass(dc, indent=0):
+            for field_name in dc.__dataclass_fields__:
+                value = getattr(dc, field_name)
+                if hasattr(value, "__dataclass_fields__"):
+                    print(" " * indent + f"{field_name}:")
+                    print_dataclass(value, indent + 4)
+                else:
+                    print(" " * indent + f"{field_name}: {value}")
+
+        print(f"{self.__class__.__name__}:")
+        print_dataclass(self, indent=4)

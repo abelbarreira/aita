@@ -10,7 +10,7 @@ def test_main_version(mocker, capsys):
         "argparse.ArgumentParser.parse_args",
         return_value=type("Args", (), {"version": True, "prompt": None}),
     )
-    mocker.patch("aita.main.get_version", return_value="1.2.3")  # <--- patch here
+    mocker.patch("aita.main.get_version", return_value="1.2.3")
 
     aita_main.main()
     captured = capsys.readouterr()
@@ -23,8 +23,6 @@ def test_main_missing_prompt(mocker, capsys):
         "argparse.ArgumentParser.parse_args",
         return_value=type("Args", (), {"version": False, "prompt": None}),
     )
-
-    # Patch exit to raise SystemExit so the function stops after printing
     mock_exit = mocker.patch("builtins.exit", side_effect=SystemExit)
 
     with pytest.raises(SystemExit):
@@ -51,8 +49,6 @@ def test_main_missing_env_keys(mocker, capsys):
         return env_values.get(key)
 
     mocker.patch("os.getenv", side_effect=getenv_side_effect)
-
-    # Patch exit to raise SystemExit to stop execution after error message
     mock_exit = mocker.patch("builtins.exit", side_effect=SystemExit)
 
     with pytest.raises(SystemExit):
@@ -69,20 +65,45 @@ def test_main_successful_flow(mocker, capsys):
     args = type("Args", (), {"version": False, "prompt": "Find flights to Paris"})
     mocker.patch("argparse.ArgumentParser.parse_args", return_value=args)
     mocker.patch("aita.main.load_dotenv")
-
-    # Mock os.getenv to return valid keys
     mocker.patch("os.getenv", side_effect=lambda key: "https://valid.url")
 
-    # Mock parse_prompt in the main namespace
-    filters = {"destination": "Paris", "dates": "2025-12-20:2025-12-25"}
-    mocker.patch("aita.main.parse_prompt", return_value=filters)
+    # Mock Filters.from_prompt to return a Filters object with known values
+    from aita.core.filters import Filters
 
-    # Mock search_travel_combinations in the main namespace
-    flights = [{"flight_id": "FL123", "price": 500}]
-    hotels = [{"hotel_id": "HT456", "price_per_night": 150}]
+    filters_instance = Filters(
+        origin="Berlin",
+        destination="Paris",
+        start_date="5 January",
+        duration_min=3,
+        duration_max=3,
+        flexibility=0,
+    )
+    mocker.patch("aita.core.filters.Filters.from_prompt", return_value=filters_instance)
+
+    # Mock generate_query_dates to return a known dict
+    from datetime import datetime
+    from aita.core.query_dates import QueryDates
+
+    query_dates_dict = {
+        0: QueryDates(start_date=datetime(2025, 1, 5), end_date=datetime(2025, 1, 8))
+    }
     mocker.patch(
-        "aita.main.search_travel_combinations",
-        return_value={"flights": flights, "hotels": hotels},
+        "aita.core.query_dates.generate_query_dates", return_value=query_dates_dict
+    )
+
+    # Mock pretty_print_query_dates to just print a known string
+    mocker.patch(
+        "aita.core.query_dates.pretty_print_query_dates",
+        side_effect=lambda qd: print("ID 0: Start = 2025-01-05, End = 2025-01-08"),
+    )
+
+    # Mock Filters.pretty_print to print a known string
+    mocker.patch.object(
+        Filters,
+        "pretty_print",
+        side_effect=lambda: print(
+            "origin: Berlin\ndestination: Paris\nstart_date: 5 January\nduration_min: 3\nduration_max: 3\nflexibility: 0"
+        ),
     )
 
     aita_main.main()
@@ -90,8 +111,7 @@ def test_main_successful_flow(mocker, capsys):
 
     assert "All required .env keys are present" in captured.out
     assert "Parsed Filters:" in captured.out
+    assert "origin: Berlin" in captured.out
     assert "destination: Paris" in captured.out
-    assert "Flight Results:" in captured.out
-    assert "FL123" in captured.out
-    assert "Hotel Results:" in captured.out
-    assert "HT456" in captured.out
+    assert "Query Dates:" in captured.out
+    assert "ID 0: Start = 2025-01-05, End = 2025-01-08" in captured.out
