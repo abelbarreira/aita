@@ -61,7 +61,16 @@ For the moment, let's start with Flights info.
   - Pro: 5$
     - 20.000 / m
     - +0.005
+- [Priceline COM](https://rapidapi.com/ntd119/api/priceline-com2) [hotels and flights]
+  - 572 subs
+  - Free
+    - 500 / m
+    - 1000 request per hour
+  - Pro: 15$
+    - 35.500 / m
 
 ## Conclusion
 
-For Flights, I'm going to maintain two of them, [Kiwi.com Cheap Flights](https://rapidapi.com/emir12/api/kiwi-com-cheap-flights) first and then [Booking.com](https://rapidapi.com/ntd119/api/booking-com18).
+For Flights and Hotels, I'm going to integrate two of them, [Priceline COM](https://rapidapi.com/ntd119/api/priceline-com2) first and then [Booking.com](https://rapidapi.com/ntd119/api/booking-com18).
+
+For Flights, I will integrate eventually integrate [Kiwi.com Cheap Flights](https://rapidapi.com/emir12/api/kiwi-com-cheap-flights).
