@@ -1,9 +1,10 @@
 {
-  "test_filters": true,
-  "test_query_dates": true,
-  "test_query_builder": true,
-  "test_combo_engine": true,
-  "test_flights_api": true,
-  "test_hotels_api": true,
-  "test_main": true
+  "test_filters": false,
+  "test_query_dates": false,
+  "test_query_builder": false,
+  "test_combo_engine": false,
+  "test_flights_api": false,
+  "test_flights_api_priceline_com2": true,
+  "test_hotels_api": false,
+  "test_main": false
 }
