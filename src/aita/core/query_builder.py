@@ -40,6 +40,19 @@ class QueryFlights:
             "direct": self.flight.direct,
         }
 
+    def pretty_print(self) -> None:
+        """
+        Nicely prints all attributes of the QueryFlights instance.
+        """
+        print(f"{self.__class__.__name__}:")
+        print(f"  origin: {self.origin}")
+        print(f"  destination: {self.destination}")
+        print(f"  start_date: {self.query_dates.start_date.strftime('%Y-%m-%d')}")
+        print(f"  end_date: {self.query_dates.end_date.strftime('%Y-%m-%d')}")
+        print(f"  departure_time_min: {self.flight.departure_time_min}")
+        print(f"  departure_time_max: {self.flight.departure_time_max}")
+        print(f"  direct: {self.flight.direct}")
+
 
 @dataclass
 class QueryHotels:
@@ -71,3 +84,15 @@ class QueryHotels:
             "all_inclusive": self.hotel.all_inclusive,
             "distance_to_beach": self.hotel.distance_to_beach,
         }
+
+    def pretty_print(self) -> None:
+        """
+        Nicely prints all attributes of the QueryHotels instance.
+        """
+        print(f"{self.__class__.__name__}:")
+        print(f"  destination: {self.destination}")
+        print(f"  area: {self.area}")
+        print(f"  start_date: {self.query_dates.start_date.strftime('%Y-%m-%d')}")
+        print(f"  end_date: {self.query_dates.end_date.strftime('%Y-%m-%d')}")
+        print(f"  stars: {self.hotel.stars}")
+        print(f"  all_inclusive: {self.hotel.all_inclusive}")
