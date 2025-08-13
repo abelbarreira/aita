@@ -107,6 +107,9 @@ def search_flights_priceline_com2_search_roundtrip(
         print(f"Flight API request failed: {e}")
         return
 
+    currency = response_json.get("data", {}).get("currency")
+    print(currency)
+
     return response_json  # Return the full JSON response
 
 
@@ -144,8 +147,17 @@ def search_flights_priceline_com2(query_flights: QueryFlights) -> dict:
         returnDate=query_flights.query_dates.end_date.strftime("%Y-%m-%d"),
     )
 
-    print("\nSearch results:")
-    print(response_json)
+    filtered = filter_flights(
+        response_json,
+        origin_airports[0].id,
+        destination_airports[0].id,
+        query_flights.query_dates.start_date.strftime("%Y-%m-%d"),
+    )
+
+    print(f"Found {len(filtered)} matching flights.")
+    for flight in filtered:
+        print(flight["totalPriceWithDecimal"]["price"])
+
     return response_json  # Return the full JSON response
 
 
@@ -168,3 +180,40 @@ def generate_result_airports(response_json: dict) -> dict[int, ResultsAirports]:
             )
             idx += 1
     return results_airports
+
+
+def filter_flights(response_json, origin_code, destination_code, departure_date):
+    """
+    Filters listings for flights matching the given origin, destination, and departure date.
+    """
+    filtered = []
+    for listing in response_json.get("data", {}).get("listings", []):
+        if not listing.get("slices"):
+            continue
+        # For roundtrip, you may want to check both outbound and inbound slices
+        outbound_slice = listing["slices"][0]
+        segments = outbound_slice.get("segments", [])
+        if not segments:
+            continue
+        first_segment = segments[0]
+        last_segment = segments[-1]
+        # Get codes and dates
+        seg_depart_code = (
+            first_segment.get("departInfo", {}).get("airport", {}).get("code")
+        )
+        seg_arrive_code = (
+            last_segment.get("arrivalInfo", {}).get("airport", {}).get("code")
+        )
+        seg_depart_time = (
+            first_segment.get("departInfo", {}).get("time", {}).get("dateTime", "")
+        )
+        seg_depart_date = seg_depart_time[:10]  # 'YYYY-MM-DD'
+        # Filter by codes and date
+        if (
+            seg_depart_code == origin_code
+            and seg_arrive_code == destination_code
+            and seg_depart_date == departure_date
+            and len(segments) == 1  # Only direct flights
+        ):
+            filtered.append(listing)
+    return filtered
