@@ -11,6 +11,14 @@
         "baggageContentAvailable": false
       },
       {
+        "code": "VL",
+        "name": "Med-View Airline",
+        "smallImage": "airLogo_VL.png",
+        "baggageFeeUrl": "",
+        "phoneNumber": "",
+        "baggageContentAvailable": false
+      },
+      {
         "code": "BT",
         "name": "airBaltic",
         "smallImage": "airLogo_BT.png",
@@ -51,6 +59,14 @@
         "baggageContentAvailable": true
       },
       {
+        "code": "WA",
+        "name": "KLM Cityhopper",
+        "smallImage": "airLogo_WA.png",
+        "baggageFeeUrl": "",
+        "phoneNumber": "",
+        "baggageContentAvailable": false
+      },
+      {
         "code": "DE",
         "name": "Condor Flugdienst",
         "smallImage": "airLogo_DE.png",
@@ -62,14 +78,6 @@
         "code": "CL",
         "name": "Lufthansa Cityline",
         "smallImage": "airLogo_CL.png",
-        "baggageFeeUrl": "",
-        "phoneNumber": "",
-        "baggageContentAvailable": false
-      },
-      {
-        "code": "NI",
-        "name": "Portugalia",
-        "smallImage": "airLogo_NI.png",
         "baggageFeeUrl": "",
         "phoneNumber": "",
         "baggageContentAvailable": false
@@ -89,6 +97,14 @@
         "baggageFeeUrl": "www.swiss.com/us/EN/prepare/baggage",
         "phoneNumber": "1 (833) 626-0737",
         "baggageContentAvailable": true
+      },
+      {
+        "code": "DY",
+        "name": "Norwegian",
+        "smallImage": "airLogo_DY.png",
+        "baggageFeeUrl": "www.norwegian.com/us/travel-info/baggage/",
+        "phoneNumber": "1-800-357-4159",
+        "baggageContentAvailable": false
       },
       {
         "code": "UX",
@@ -147,14 +163,6 @@
         "baggageContentAvailable": false
       },
       {
-        "code": "I2",
-        "name": "Iberia Express",
-        "smallImage": "airLogo_I2.png",
-        "baggageFeeUrl": "",
-        "phoneNumber": "",
-        "baggageContentAvailable": false
-      },
-      {
         "code": "KL",
         "name": "KLM-Royal Dutch Airlines",
         "smallImage": "airLogo_KL.png",
@@ -195,6 +203,14 @@
         "baggageContentAvailable": true
       },
       {
+        "code": "AY",
+        "name": "Finnair",
+        "smallImage": "airLogo_AY.png",
+        "baggageFeeUrl": "www.finnair.com/en/baggage-on-finnair-flights",
+        "phoneNumber": "1-877-757-7143",
+        "baggageContentAvailable": true
+      },
+      {
         "code": "LH",
         "name": "Lufthansa",
         "smallImage": "airLogo_LH.png",
@@ -227,6 +243,14 @@
         "name": "Schipol Airport",
         "state": null,
         "isoCountryCode": "NL"
+      },
+      {
+        "code": "OSL",
+        "city": "Oslo",
+        "country": "Norway",
+        "name": "Oslo Intl Airport, Gardermoen",
+        "state": null,
+        "isoCountryCode": "NO"
       },
       {
         "code": "MAD",
@@ -275,6 +299,14 @@
         "name": "London City Airport",
         "state": null,
         "isoCountryCode": "GB"
+      },
+      {
+        "code": "HEL",
+        "city": "Helsinki",
+        "country": "Finland",
+        "name": "Vantaa Airport",
+        "state": null,
+        "isoCountryCode": "FI"
       },
       {
         "code": "VIE",
@@ -349,6 +381,14 @@
         "isoCountryCode": "SE"
       },
       {
+        "code": "GVA",
+        "city": "Geneva",
+        "country": "Switzerland",
+        "name": "Geneva (Cointrin) Intl Airport",
+        "state": null,
+        "isoCountryCode": "CH"
+      },
+      {
         "code": "LHR",
         "city": "London",
         "country": "United Kingdom",
@@ -368,14 +408,14 @@
     "listings": [
       {
         "__typename": "AirListingsRtlItinerary",
-        "itemKey": "545331e08df44cc8946557426a5f746f",
-        "priceKey": "CgJ2MRIkNWJmODEwN2YtNjA3Yi00ODQ4LTk1NWEtMzQ3MjI0OWE0NGNkGAEiBUZVU0VEKgUI_QoQATIFZ3VzZTQ6MFdPUktGTE9XX0lEXzZjODlmODAyLTA2OWQtNDk5OC1iMDA3LTNiMDY2NGFiZmI0YQ",
-        "isFused": true,
+        "itemKey": "57cc216cfb724251ab5eb49ff7447d80",
+        "priceKey": "CgJ2MRIkODA0OWQ5OGYtYmFlZS00MWFmLTk5ZGMtNmM3NWZiMzc4ZGNhGAEiB0NMQVNTSUMqBQj-AhABMgVndXNlNDowV09SS0ZMT1dfSURfNzkxMWExNjQtNDRiMi00MmJjLWFmOTktODBkOWQzZWFlOGIw",
+        "isFused": false,
         "isInterline": false,
         "totalPriceWithDecimal": {
-          "price": 489.44
+          "price": 433.8
         },
-        "id": "545331e08df44cc8946557426a5f746f",
+        "id": "57cc216cfb724251ab5eb49ff7447d80",
         "groupId": null,
         "refId": null,
         "isSaleEligible": false,
@@ -413,28 +453,28 @@
             "isSelected": true,
             "price": [
               {
-                "amount": 489.44,
+                "amount": 433.8,
                 "currencyCode": "USD",
                 "type": "TOTAL_PRICE"
               },
               {
-                "amount": 489.44,
+                "amount": 433.8,
                 "currencyCode": "USD",
                 "type": "AVG_PRICE"
               },
               {
-                "amount": 489.44,
+                "amount": 433.8,
                 "currencyCode": "USD",
                 "type": "ADULT"
               }
             ],
-            "priceKey": "CgJ2MRIkNWJmODEwN2YtNjA3Yi00ODQ4LTk1NWEtMzQ3MjI0OWE0NGNkGAEiBUZVU0VEKgUI_QoQATIFZ3VzZTQ6MFdPUktGTE9XX0lEXzZjODlmODAyLTA2OWQtNDk5OC1iMDA3LTNiMDY2NGFiZmI0YQ"
+            "priceKey": "CgJ2MRIkODA0OWQ5OGYtYmFlZS00MWFmLTk5ZGMtNmM3NWZiMzc4ZGNhGAEiB0NMQVNTSUMqBQj-AhABMgVndXNlNDowV09SS0ZMT1dfSURfNzkxMWExNjQtNDRiMi00MmJjLWFmOTktODBkOWQzZWFlOGIw"
           }
         ],
         "slices": [
           {
             "uniqueSliceId": null,
-            "sliceKey": "5852025-09-04T06:00SKSKCPHPMI0",
+            "sliceKey": "5852025-09-05T06:00SKSKCPHPMI0",
             "sliceRefId": 1,
             "isOvernight": false,
             "segments": [
@@ -448,7 +488,7 @@
                     "name": "Copenhagen Airport, Kastrup"
                   },
                   "time": {
-                    "dateTime": "2025-09-04T06:00:00"
+                    "dateTime": "2025-09-05T06:00:00"
                   }
                 },
                 "arrivalInfo": {
@@ -457,7 +497,7 @@
                     "name": "Palma de Mallorca (Son Sant Joan) Airport"
                   },
                   "time": {
-                    "dateTime": "2025-09-04T09:05:00"
+                    "dateTime": "2025-09-05T09:05:00"
                   }
                 },
                 "operatingAirline": "SK",
@@ -498,7 +538,7 @@
                   ]
                 },
                 "displayText": {
-                  "operatedByText": "Operated by  SAS CONNECT",
+                  "operatedByText": null,
                   "flightNumber": null,
                   "displayCabinName": null,
                   "planeChangeText": null,
@@ -513,7 +553,7 @@
             ],
             "durationInMinutes": "185",
             "displayText": {
-              "operatedByText": "Operated by  SAS CONNECT"
+              "operatedByText": null
             },
             "merchandising": [
               "EARLY_BIRD",
@@ -528,7 +568,221 @@
         "voidWindowInfo": {
           "timeStamp": "2025-08-16T03:29:59Z",
           "tzDesignator": null,
-          "hoursLeft": "43"
+          "hoursLeft": "33"
+        },
+        "airlines": [
+          {
+            "marketingAirline": null,
+            "name": "Scandinavian Airlines",
+            "image": "airLogo_SK.png"
+          }
+        ],
+        "allFareBrandAttributes": [
+          [
+            {
+              "inclusion": "CHARGEABLE",
+              "description": "PRE RESERVED SEAT ASSIGNMENT",
+              "type": "SEATS"
+            },
+            {
+              "inclusion": "NOT_INCLUDED",
+              "description": "REFUNDABLE TICKET",
+              "type": "REFUND"
+            },
+            {
+              "inclusion": "CHARGEABLE",
+              "description": "SAME DAY AS ORIGINAL FLIGHT",
+              "type": "REBOOKING"
+            },
+            {
+              "inclusion": "CHARGEABLE",
+              "description": "SNACK",
+              "type": "MEALS"
+            },
+            {
+              "inclusion": "INCLUDED",
+              "description": "CARRY ON BAG 55X40X23 8 KG",
+              "type": "CARRY_ON"
+            },
+            {
+              "inclusion": "INCLUDED",
+              "description": "SECOND PRE PAID BAG 23KG",
+              "type": "CHECKED_BAG"
+            }
+          ]
+        ],
+        "allFareBrandNames": [
+          "Sas Go Smart"
+        ],
+        "candidateId": null,
+        "candidateKey": null,
+        "merchandising": [
+          "CHEAPEST_NON_STOP"
+        ],
+        "saleSavings": null
+      },
+      {
+        "__typename": "AirListingsRtlItinerary",
+        "itemKey": "88b64ede48e94465b9fce9862d60a982",
+        "priceKey": "CgJ2MRIkODA0OWQ5OGYtYmFlZS00MWFmLTk5ZGMtNmM3NWZiMzc4ZGNhGAEiB0NMQVNTSUMqBQjWBxABMgVndXNlNDowV09SS0ZMT1dfSURfNzkxMWExNjQtNDRiMi00MmJjLWFmOTktODBkOWQzZWFlOGIw",
+        "isFused": false,
+        "isInterline": false,
+        "totalPriceWithDecimal": {
+          "price": 524
+        },
+        "id": "88b64ede48e94465b9fce9862d60a982",
+        "groupId": null,
+        "refId": null,
+        "isSaleEligible": false,
+        "seatsAvailable": 9,
+        "marketingAirlines": [
+          {
+            "code": "SK"
+          }
+        ],
+        "fareBrands": [
+          {
+            "ancillaries": [
+              {
+                "name": "Seat Selection",
+                "offerType": "F"
+              },
+              {
+                "name": "Changes",
+                "offerType": "F"
+              },
+              {
+                "name": "Cancellation",
+                "offerType": "N"
+              },
+              {
+                "name": "Checked Bag",
+                "offerType": "C"
+              },
+              {
+                "name": "Carry-on Bag",
+                "offerType": "C"
+              }
+            ],
+            "name": "Sas Go Smart",
+            "isSelected": true,
+            "price": [
+              {
+                "amount": 524,
+                "currencyCode": "USD",
+                "type": "TOTAL_PRICE"
+              },
+              {
+                "amount": 524,
+                "currencyCode": "USD",
+                "type": "AVG_PRICE"
+              },
+              {
+                "amount": 524,
+                "currencyCode": "USD",
+                "type": "ADULT"
+              }
+            ],
+            "priceKey": "CgJ2MRIkODA0OWQ5OGYtYmFlZS00MWFmLTk5ZGMtNmM3NWZiMzc4ZGNhGAEiB0NMQVNTSUMqBQjWBxABMgVndXNlNDowV09SS0ZMT1dfSURfNzkxMWExNjQtNDRiMi00MmJjLWFmOTktODBkOWQzZWFlOGIw"
+          }
+        ],
+        "slices": [
+          {
+            "uniqueSliceId": null,
+            "sliceKey": "28112025-09-05T17:05SKSKCPHPMI0",
+            "sliceRefId": 1,
+            "isOvernight": false,
+            "segments": [
+              {
+                "id": 1,
+                "cabinClass": "ECO",
+                "uniqueSegId": null,
+                "departInfo": {
+                  "airport": {
+                    "code": "CPH",
+                    "name": "Copenhagen Airport, Kastrup"
+                  },
+                  "time": {
+                    "dateTime": "2025-09-05T17:05:00"
+                  }
+                },
+                "arrivalInfo": {
+                  "airport": {
+                    "code": "PMI",
+                    "name": "Palma de Mallorca (Son Sant Joan) Airport"
+                  },
+                  "time": {
+                    "dateTime": "2025-09-05T20:10:00"
+                  }
+                },
+                "operatingAirline": "SK",
+                "marketingAirline": "SK",
+                "equipmentName": "Airbus A320neo",
+                "equipment": "32N",
+                "duration": 185,
+                "stopQuantity": 0,
+                "flightNumber": "2811",
+                "isSubjectToGovtApproval": false,
+                "isOvernight": false,
+                "brand": {
+                  "brandAttributes": [
+                    {
+                      "inclusion": "CHARGEABLE",
+                      "type": "SEATS"
+                    },
+                    {
+                      "inclusion": "NOT_INCLUDED",
+                      "type": "REFUND"
+                    },
+                    {
+                      "inclusion": "CHARGEABLE",
+                      "type": "REBOOKING"
+                    },
+                    {
+                      "inclusion": "CHARGEABLE",
+                      "type": "MEALS"
+                    },
+                    {
+                      "inclusion": "INCLUDED",
+                      "type": "CARRY_ON"
+                    },
+                    {
+                      "inclusion": "INCLUDED",
+                      "type": "CHECKED_BAG"
+                    }
+                  ]
+                },
+                "displayText": {
+                  "operatedByText": null,
+                  "flightNumber": null,
+                  "displayCabinName": null,
+                  "planeChangeText": null,
+                  "differentAirportText": null,
+                  "layoverText": null,
+                  "equipmentText": "Airbus A320neo"
+                },
+                "segmentNote": null,
+                "bkgClass": null,
+                "brandId": "SK_SAS_GO_SMART"
+              }
+            ],
+            "durationInMinutes": "185",
+            "displayText": {
+              "operatedByText": null
+            },
+            "merchandising": [
+              "SHORTEST_DURATION"
+            ],
+            "id": 1,
+            "isSelected": null,
+            "departing": null,
+            "arrival": null
+          }
+        ],
+        "voidWindowInfo": {
+          "timeStamp": "2025-08-16T03:29:59Z",
+          "tzDesignator": null,
+          "hoursLeft": "33"
         },
         "airlines": [
           {
@@ -585,8 +839,8 @@
       "candidates": []
     },
     "filterDefaults": {
-      "minTotalFareWithTaxesAndFees": 489.44,
-      "maxTotalFareWithTaxesAndFees": 489.44,
+      "minTotalFareWithTaxesAndFees": 433.8,
+      "maxTotalFareWithTaxesAndFees": 524,
       "airlines": [
         {
           "value": "SK"
@@ -611,15 +865,15 @@
           "sliceRefId": 1,
           "sliceDurationMax": 11100000,
           "sliceDurationMin": 11100000,
-          "minTakeoffTime": 1756965600000,
-          "maxTakeoffTime": 1756965600000,
-          "minLandingTime": 1756976700000,
-          "maxLandingTime": 1756976700000
+          "minTakeoffTime": 1757052000000,
+          "maxTakeoffTime": 1757091900000,
+          "minLandingTime": 1757063100000,
+          "maxLandingTime": 1757103000000
         }
       ],
       "numOfStops": [
         {
-          "secondaryLabel": "from $490",
+          "secondaryLabel": "from $434",
           "primaryLabel": "Nonstop",
           "value": "0"
         },
@@ -636,19 +890,19 @@
       ]
     },
     "listingsMetaData": {
-      "totalFilteredItineraries": 1,
-      "totalItineraries": 2314,
-      "searchSessionKey": "5bf8107f-607b-4848-955a-3472249a44cd",
+      "totalFilteredItineraries": 2,
+      "totalItineraries": 2812,
+      "searchSessionKey": "8049d98f-baee-41af-99dc-6c75fb378dca",
       "clientSessionId": null,
-      "requestId": "f5b6e7497e9d2911df3c",
+      "requestId": "301be1c2e5dd4e3f618e",
       "lowerBound": 1,
       "searchId": null,
       "airlineImagePath": "https://s1.pclncdn.com/design-assets/fly/carrier-logos/",
       "hasExpressDeal": false,
       "hasAirCanada": null,
-      "minimumRetailPrice": 185.74,
+      "minimumRetailPrice": 231.78,
       "minDurationPrice": null,
-      "nonStopPrice": 489.44,
+      "nonStopPrice": 433.8,
       "tripType": "RT",
       "minVoidWindowClose": null,
       "hasClosedUserGroupDeals": null
@@ -699,8 +953,8 @@
   },
   "meta": {
     "currentPage": 1,
-    "limit": 1,
-    "totalRecords": 1,
+    "limit": 2,
+    "totalRecords": 2,
     "totalPage": 1
   },
   "status": true,

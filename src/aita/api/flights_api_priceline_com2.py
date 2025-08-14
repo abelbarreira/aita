@@ -4,8 +4,15 @@ import os
 import requests
 import json
 from aita.core.query_builder import QueryFlights
-from aita.core.results_builder import ResultsAirports, pretty_print_results_airports
+from aita.core.results_builder import (
+    ResultsAirports,
+    ResultsFlights,
+    pretty_print_results_airports,
+    pretty_print_results_flights,
+)
 
+LOG: bool = True  # Set to False to disable logging
+USE_LOG: bool = True  # Set to True to use log files instead of API calls
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -13,7 +20,7 @@ def search_flights(query_flights: QueryFlights) -> dict:
 
     # auto-complete: Origin
     response_json = _search_flights_priceline_com2_auto_complete(
-        query_flights.origin, log=True, log_name=query_flights.origin, use_log=True
+        query_flights.origin, log=LOG, log_name=query_flights.origin, use_log=USE_LOG
     )
     origin_airports = _generate_result_airports(response_json)
 
@@ -23,9 +30,9 @@ def search_flights(query_flights: QueryFlights) -> dict:
     # auto-complete: Destination
     response_json = _search_flights_priceline_com2_auto_complete(
         query_flights.destination,
-        log=True,
+        log=LOG,
         log_name=query_flights.destination,
-        use_log=True,
+        use_log=USE_LOG,
     )
     destination_airports = _generate_result_airports(response_json)
 
@@ -43,21 +50,15 @@ def search_flights(query_flights: QueryFlights) -> dict:
         departureDate=query_flights.query_dates.start_date.strftime("%Y-%m-%d"),
         returnDate=query_flights.query_dates.end_date.strftime("%Y-%m-%d"),
         direct_flight=query_flights.flight.direct,
-        log=True,
+        log=LOG,
         log_name="",
-        use_log=True,
+        use_log=USE_LOG,
     )
 
-    filtered = _filter_flights(
-        response_json,
-        origin_airports[0].id,
-        destination_airports[0].id,
-        query_flights.query_dates.start_date.strftime("%Y-%m-%d"),
-    )
+    result_flights = _generate_result_flights(response_json)
 
-    print(f"Found {len(filtered)} matching flights.")
-    for flight in filtered:
-        print(flight["totalPriceWithDecimal"]["price"])
+    print("\nResult Flights:", len(result_flights))
+    pretty_print_results_flights(result_flights)  # Debugging output
 
     return response_json  # Return the full JSON response
 
@@ -154,9 +155,6 @@ def _search_flights_priceline_com2_search_roundtrip(
         use_log=use_log,
     )
 
-    # currency = response_json.get("data", {}).get("currency")
-    # print(currency)
-
     return response_json
 
 
@@ -181,73 +179,168 @@ def _generate_result_airports(response_json: dict) -> dict[int, ResultsAirports]
     return results_airports
 
 
-def _filter_flights(
-    response_json: dict, origin_code: str, destination_code: str, departure_date: str
-) -> list:
-    """
-    Filters listings for flights matching the given origin, destination, and departure date.
-    """
-    filtered = []
-    for listing in response_json.get("data", {}).get("listings", []):
-        if not listing.get("slices"):
-            continue
-        # For roundtrip, you may want to check both outbound and inbound slices
-        outbound_slice = listing["slices"][0]
-        segments = outbound_slice.get("segments", [])
-        if not segments:
-            continue
-        first_segment = segments[0]
-        last_segment = segments[-1]
-        # Get codes and dates
-        seg_depart_code = (
-            first_segment.get("departInfo", {}).get("airport", {}).get("code")
+# def _filter_flights(
+#     response_json: dict, origin_code: str, destination_code: str, departure_date: str
+# ) -> list:
+#     """
+#     Filters listings for flights matching the given origin, destination, and departure date.
+#     """
+#     filtered = []
+#     for listing in response_json.get("data", {}).get("listings", []):
+#         if not listing.get("slices"):
+#             continue
+#         # For roundtrip, you may want to check both outbound and inbound slices
+#         outbound_slice = listing["slices"][0]
+#         segments = outbound_slice.get("segments", [])
+#         if not segments:
+#             continue
+#         first_segment = segments[0]
+#         last_segment = segments[-1]
+#         # Get codes and dates
+#         seg_depart_code = (
+#             first_segment.get("departInfo", {}).get("airport", {}).get("code")
+#         )
+#         seg_arrive_code = (
+#             last_segment.get("arrivalInfo", {}).get("airport", {}).get("code")
+#         )
+#         seg_depart_time = (
+#             first_segment.get("departInfo", {}).get("time", {}).get("dateTime", "")
+#         )
+#         seg_depart_date = seg_depart_time[:10]  # 'YYYY-MM-DD'
+#         # Filter by codes and date
+#         if (
+#             seg_depart_code == origin_code
+#             and seg_arrive_code == destination_code
+#             and seg_depart_date == departure_date
+#             and len(segments) == 1  # Only direct flights
+#         ):
+#             filtered.append(listing)
+#         # Check inbound slice for return date, etc.
+#         if len(listing["slices"]) > 1:
+#             inbound_slice = listing["slices"][1]
+#             inbound_segments = inbound_slice.get("segments", [])
+#             if not inbound_segments:
+#                 continue
+#             first_inbound_segment = inbound_segments[0]
+#             last_inbound_segment = inbound_segments[-1]
+#             # Get return codes and dates
+#             seg_arrive_code_return = (
+#                 first_inbound_segment.get("arrivalInfo", {})
+#                 .get("airport", {})
+#                 .get("code")
+#             )
+#             seg_depart_code_return = (
+#                 last_inbound_segment.get("departInfo", {})
+#                 .get("airport", {})
+#                 .get("code")
+#             )
+#             seg_arrive_time_return = (
+#                 first_inbound_segment.get("arrivalInfo", {})
+#                 .get("time", {})
+#                 .get("dateTime", "")
+#             )
+#             seg_arrive_date_return = seg_arrive_time_return[:10]  # 'YYYY-MM-DD'
+#             # Filter by return codes and date
+#             if (
+#                 seg_depart_code_return == destination_code
+#                 and seg_arrive_code_return == origin_code
+#                 and seg_arrive_date_return == departure_date
+#                 and len(inbound_segments) == 1  # Only direct flights
+#             ):
+#                 filtered.append(listing)
+#     return filtered
+
+
+def _generate_result_flights(response_json: dict) -> dict[int, ResultsFlights]:
+    results_flights: dict[int, ResultsFlights] = {}
+
+    data = response_json.get("data", {})
+    listings = data.get("listings", [])
+    airline_lookup = {a.get("code"): a.get("name") for a in data.get("airline", [])}
+
+    for idx, listing in enumerate(listings):
+        # Airline names
+        marketing_airlines = listing.get("marketingAirlines", [])
+        airline_names = [
+            airline_lookup.get(ma.get("code"), ma.get("code"))
+            for ma in marketing_airlines
+        ]
+        airline_name_str = ", ".join(filter(None, airline_names)) or "Unknown Airline"
+
+        # Initialize fields
+        flight_numbers = []
+        departure_time = ""
+        arrival_time = ""
+        total_duration_minutes = 0
+        total_stops = 0
+
+        slices = listing.get("slices", [])
+        if slices:
+            # Outbound departure time = first segment's depart time of first slice
+            first_slice_segments = slices[0].get("segments", [])
+            if first_slice_segments:
+                departure_time = (
+                    first_slice_segments[0]
+                    .get("departInfo", {})
+                    .get("time", {})
+                    .get("dateTime", "")
+                )
+
+            # Inbound arrival time = last segment's arrival time of last slice
+            last_slice_segments = slices[-1].get("segments", [])
+            if last_slice_segments:
+                arrival_time = (
+                    last_slice_segments[-1]
+                    .get("arrivalInfo", {})
+                    .get("time", {})
+                    .get("dateTime", "")
+                )
+
+            # Gather flight numbers, stops, and total duration
+            for slice_info in slices:
+                segs = slice_info.get("segments", [])
+                total_stops += max(len(segs) - 1, 0)
+                for seg in segs:
+                    fn = seg.get("flightNumber")
+                    if fn:
+                        flight_numbers.append(str(fn))
+                dur_str = slice_info.get("durationInMinutes")
+                if dur_str and dur_str.isdigit():
+                    total_duration_minutes += int(dur_str)
+
+        # Format duration
+        duration_str = (
+            f"{total_duration_minutes // 60}h {total_duration_minutes % 60}m"
+            if total_duration_minutes
+            else "N/A"
         )
-        seg_arrive_code = (
-            last_segment.get("arrivalInfo", {}).get("airport", {}).get("code")
+        flight_numbers_str = ", ".join(flight_numbers)
+
+        # Price & currency
+        price = None
+        currency = None
+        fare_brands = listing.get("fareBrands", [])
+        if fare_brands:
+            for p in fare_brands[0].get("price", []):
+                if p.get("type") == "TOTAL_PRICE":
+                    price = p.get("amount")
+                    currency = p.get("currencyCode")
+                    break
+        if price is None:
+            tpwd = listing.get("totalPriceWithDecimal", {})
+            price = tpwd.get("price")
+        if not currency:
+            currency = "USD"
+
+        results_flights[idx] = ResultsFlights(
+            airline_name=airline_name_str,
+            flight_numbers=flight_numbers_str,
+            departure_time=departure_time,
+            arrival_time=arrival_time,
+            duration=duration_str,
+            stops=total_stops,
+            price=price if price is not None else 0.0,
+            currency=currency,
         )
-        seg_depart_time = (
-            first_segment.get("departInfo", {}).get("time", {}).get("dateTime", "")
-        )
-        seg_depart_date = seg_depart_time[:10]  # 'YYYY-MM-DD'
-        # Filter by codes and date
-        if (
-            seg_depart_code == origin_code
-            and seg_arrive_code == destination_code
-            and seg_depart_date == departure_date
-            and len(segments) == 1  # Only direct flights
-        ):
-            filtered.append(listing)
-        # Check inbound slice for return date, etc.
-        if len(listing["slices"]) > 1:
-            inbound_slice = listing["slices"][1]
-            inbound_segments = inbound_slice.get("segments", [])
-            if not inbound_segments:
-                continue
-            first_inbound_segment = inbound_segments[0]
-            last_inbound_segment = inbound_segments[-1]
-            # Get return codes and dates
-            seg_arrive_code_return = (
-                first_inbound_segment.get("arrivalInfo", {})
-                .get("airport", {})
-                .get("code")
-            )
-            seg_depart_code_return = (
-                last_inbound_segment.get("departInfo", {})
-                .get("airport", {})
-                .get("code")
-            )
-            seg_arrive_time_return = (
-                first_inbound_segment.get("arrivalInfo", {})
-                .get("time", {})
-                .get("dateTime", "")
-            )
-            seg_arrive_date_return = seg_arrive_time_return[:10]  # 'YYYY-MM-DD'
-            # Filter by return codes and date
-            if (
-                seg_depart_code_return == destination_code
-                and seg_arrive_code_return == origin_code
-                and seg_arrive_date_return == departure_date
-                and len(inbound_segments) == 1  # Only direct flights
-            ):
-                filtered.append(listing)
-    return filtered
+
+    return results_flights

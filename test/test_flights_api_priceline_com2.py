@@ -34,13 +34,13 @@ def filters_obj():
         origin="Copenhagen",
         destination="Mallorca",
         area="Magaluf",
-        start_date="5 September",
+        start_date="6 September",
         duration_min=5,
         duration_max=6,
         flexibility=1,
         flight=FlightFilters(
-            departure_time_min="08:00",
-            departure_time_max="19:00",
+            departure_time_min="00:05",
+            departure_time_max="23:55",
             direct=True,
         ),
         hotel=HotelFilters(
