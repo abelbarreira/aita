@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from aita.version import get_version
 from pathlib import Path
+from collections import defaultdict
 
 # Path to applicable_tests.json (can be overridden by env var)
 APPLICABLE_TESTS_PATH = os.environ.get(
@@ -65,38 +66,41 @@ def pytest_collection_modifyitems(config, items):
     Filter test files and specific test cases based on applicable_tests.json.
 
     Rules:
-    - If a file is mapped to True in an enabled category → keep all tests cases in it.
-    - If a file is mapped to a list → keep only listed tests cases.
-    - An empty list → skip all tests cases in that file.
-    - "excluded" always takes priority and removes tests files
+    - If a file is mapped to True in an enabled category → keep all test cases in it.
+    - If a file is mapped to a list → keep only listed test cases.
+    - An empty list → skip all test cases in that file.
+    - "excluded" always takes priority and removes test files.
+
+    It runs the test files in the order they are defined in applicable_tests.json.
     """
     config_data = load_applicable_tests()
     tests_to_run = config_data.get("tests_to_run", {})
     excluded_tests = set(config_data.get("excluded", []))
 
-    # Build map of file_path -> tests to allow (None = all, set = specific tests, [] = none)
+    # Build map of file_path -> allowed tests (None = all, set = selected, [] = none)
     allowed_tests_map = {}
+    disabled_files = set()
 
-    # Check all enabled categories
     for category, enabled in tests_to_run.items():
-        if not enabled:
-            continue
         category_tests = config_data.get(category, {})
         for file_path, entry in category_tests.items():
-            if isinstance(entry, bool) and entry:
-                allowed_tests_map[file_path] = None  # None = allow all tests
-            elif isinstance(entry, list):
-                allowed_tests_map[file_path] = (
-                    set(entry) if entry else []
-                )  # empty list = no tests
+            if enabled:
+                if isinstance(entry, bool) and entry:
+                    allowed_tests_map[file_path] = None
+                elif isinstance(entry, list):
+                    allowed_tests_map[file_path] = set(entry) if entry else []
+            else:
+                # Category is disabled → all its files should be deselected
+                disabled_files.add(file_path)
 
-    if not allowed_tests_map and not excluded_tests:
-        return  # No filtering needed
+    if not allowed_tests_map and not excluded_tests and not disabled_files:
+        return  # Nothing to filter
 
     test_folder = Path(__file__).parent.resolve()
-    new_items = []
+    items_by_file = {}
     deselected = []
 
+    # Group items by file, applying filtering rules
     for item in items:
         file_path = Path(item.location[0]).resolve()
         try:
@@ -104,29 +108,26 @@ def pytest_collection_modifyitems(config, items):
         except ValueError:
             rel_path = file_path.name  # fallback
 
-        # Always exclude first
-        if rel_path in excluded_tests:
+        # Exclude files first
+        if rel_path in excluded_tests or rel_path in disabled_files:
             deselected.append(item)
             continue
 
-        allowed_cases_for_file = allowed_tests_map.get(rel_path)
+        allowed = allowed_tests_map.get(rel_path)
 
-        if allowed_cases_for_file is None:
-            # None = all tests allowed
-            new_items.append(item)
-        elif isinstance(allowed_cases_for_file, set):
-            # Only specific tests allowed
-            if item.name in allowed_cases_for_file:
-                new_items.append(item)
-            else:
-                deselected.append(item)
-        elif allowed_cases_for_file == []:
-            # Empty list → skip all tests in this file
-            deselected.append(item)
+        if allowed is None:
+            items_by_file.setdefault(rel_path, []).append(item)
+        elif isinstance(allowed, set) and item.name in allowed:
+            items_by_file.setdefault(rel_path, []).append(item)
         else:
-            # File not listed anywhere → deselect
+            # empty list or not in allowed set → deselect
             deselected.append(item)
+
+    # Reorder according to allowed_tests_map order
+    new_items = [
+        item for f in allowed_tests_map.keys() for item in items_by_file.get(f, [])
+    ]
 
     if deselected:
         config.hook.pytest_deselected(items=deselected)
-        items[:] = new_items
+    items[:] = new_items
