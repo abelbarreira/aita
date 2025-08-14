@@ -41,10 +41,6 @@ addopts = """
   -vv
   --strict-config
   --strict-markers
-  --html=test/reports/report.html
-  --cov=aita
-  --cov-report=term-missing
-  --cov-report=html:test/reports/coverage_html
   -s
   """ # Add -s to debug with print()
 

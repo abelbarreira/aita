@@ -52,26 +52,17 @@ def filters_obj():
 
 
 def test_search_flights_success(filters_obj):
-    # Load environment variables from .env file
     load_dotenv()
-
-    # Check keys required
     missing_keys = check_env_keys(REQUIRED_KEYS)
     if missing_keys:
-        print("Missing keys in .env file:")
-        for key in missing_keys:
-            print(f" - {key}")
-        exit(1)
-    print("All required .env keys are present.")
+        pytest.skip(f"Missing keys in .env file: {missing_keys}")
 
-    # Generate query dates
     query_dates_dic_obj = generate_query_dates(filters_obj)
     query_flights = QueryFlights.from_filters(filters_obj, query_dates_dic_obj[0])
+    query_flights.pretty_print()
 
-    query_flights.pretty_print()  # Debugging output
+    results = flights_api_priceline_com2.search_flights(query_flights)
 
-    results = flights_api_priceline_com2.search_flights_priceline_com2(query_flights)
-
-    # assert isinstance(results, list)
-    # assert results[0]["flight_id"] == "123"
-    # assert results[0]["price"] == 200
+    assert results is not None
+    assert isinstance(results, dict)
+    # Optionally, check for expected keys in results
