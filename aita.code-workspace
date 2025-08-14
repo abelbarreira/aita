@@ -16,6 +16,7 @@
     "markdown.extension.tableFormatter.enabled": true,
     "markdown.extension.tableFormatter.normalizeIndentation": true,
     "markdown.extension.showActionButtons": false,
+    "python.terminal.activateEnvironment": false, // No auto-activate env in the terminal
     "actionButtons": {
       "defaultColor": "white",
       "loadNpmCommands": false,
