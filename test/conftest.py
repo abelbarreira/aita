@@ -2,9 +2,9 @@ import subprocess
 import json
 import os
 from datetime import datetime
-from aita.version import get_version
 from pathlib import Path
 from collections import defaultdict
+from aita.version import get_version
 
 # Path to applicable_tests.json (can be overridden by env var)
 APPLICABLE_TESTS_PATH = os.environ.get(
