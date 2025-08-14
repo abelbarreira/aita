@@ -1,17 +1,24 @@
 import pytest
+import os
 import json
 from src.aita.core.filters import Filters, FlightFilters, HotelFilters
 
 
-def load_test_cases():
+def load_test_vectors():
     """
     Loads test cases from the test_filters.json file.
     """
-    with open("test/test_filters.json", "r") as f:
+    """
+    Load test vectors from JSON file located in the same folder as the test.
+    """
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "test_filters.json")
+
+    with open(file_path, "r") as f:
         return json.load(f)
 
 
-@pytest.mark.parametrize("test_case", load_test_cases())
+@pytest.mark.parametrize("test_case", load_test_vectors())
 def test_from_prompt(test_case):
     """
     Tests the from_prompt method of the Filters class.
@@ -47,7 +54,7 @@ def test_from_prompt(test_case):
             ), f"{key} mismatch: expected {expected_val}, got {actual_val}"
 
 
-@pytest.mark.parametrize("test_case", load_test_cases())
+@pytest.mark.parametrize("test_case", load_test_vectors())
 def test_check_missing_filters(test_case):
     """
     Tests the check_missing_filters method of the Filters class.
@@ -73,7 +80,7 @@ def test_check_missing_filters(test_case):
                     ), f"{key}.{subkey} should be reported as missing"
 
 
-@pytest.mark.parametrize("test_case", load_test_cases())
+@pytest.mark.parametrize("test_case", load_test_vectors())
 def test_matches(test_case):
     """
     Tests the matches method of the Filters class.

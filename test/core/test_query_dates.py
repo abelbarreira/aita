@@ -1,4 +1,5 @@
 import pytest
+import os
 import json
 from datetime import datetime
 from aita.core.query_dates import generate_query_dates
@@ -7,9 +8,11 @@ from aita.core.filters import Filters
 
 def load_test_vectors():
     """
-    Load test vectors from the JSON file.
+    Load test vectors from JSON file located in the same folder as the test.
     """
-    with open("test/test_query_dates.json", "r") as f:
+    current_dir = os.path.dirname(__file__)
+    file_path = os.path.join(current_dir, "test_query_dates.json")
+    with open(file_path, "r") as f:
         test_vectors = json.load(f)
 
     # Convert JSON data into Python objects

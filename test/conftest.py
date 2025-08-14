@@ -4,6 +4,12 @@ import os
 from datetime import datetime
 from aita.version import get_version
 
+# Set the path to applicable_tests.json here (can be outside test folder)
+APPLICABLE_TESTS_PATH = os.environ.get(
+    "APPLICABLE_TESTS_PATH",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "applicable_tests.json")),
+)
+
 
 def get_git_branch():
     try:
@@ -46,21 +52,24 @@ def pytest_html_results_summary(prefix, summary, postfix):
     )
 
 
-def pytest_collection_modifyitems(config, items):
-    # Load the test filter file
-    with open(os.path.join(os.path.dirname(__file__), "applicable_tests.json")) as f:
-        test_filters = json.load(f)
+def pytest_ignore_collect(collection_path: "pathlib.Path", config):
+    """
+    Ignore test files not marked as applicable in applicable_tests.json.
+    """
+    # Only check .py files in the test folder
+    if not str(collection_path).endswith(".py"):
+        return False
 
-    # Filters out test files that are disabled
-    selected = []
-    deselected = []
-    for item in items:
-        # Get filename without extension, e.g., test_prompt_parser
-        file_key = os.path.splitext(os.path.basename(item.fspath))[0]
-        if file_key in test_filters and test_filters[file_key]:
-            selected.append(item)
-        else:
-            deselected.append(item)
+    # Get relative path from test folder
+    test_folder = os.path.abspath(os.path.dirname(__file__))
+    rel_path = os.path.relpath(str(collection_path), test_folder).replace("\\", "/")
 
-    items[:] = selected
-    config.hook.pytest_deselected(items=deselected)
+    # Load applicable tests config
+    try:
+        with open(APPLICABLE_TESTS_PATH, encoding="utf-8") as f:
+            applicable = json.load(f)
+    except Exception as e:
+        print(f"Warning: Could not load applicable_tests.json: {e}")
+        return False
+
+    return not applicable.get(rel_path, False)
