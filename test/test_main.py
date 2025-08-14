@@ -1,5 +1,3 @@
-import sys
-import builtins
 import pytest
 from aita import main as aita_main
 
