@@ -1,9 +1,17 @@
 {
-  "core/test_filters.py": true,
-  "core/test_query_dates.py": true,
-  "core/test_query_builder.py": true,
-  "core/test_combo_engine.py": true,
-  "api/test_flights_api.py": true,
-  "api/test_hotels_api.py": true,
-  "test_main.py": true
+  "tests_to_run": {
+    "functional": true,
+    "corner": false
+  },
+  "functional": {
+    "core/test_filters.py": true,
+    "core/test_query_dates.py": true,
+    "core/test_query_builder.py": true,
+    "core/test_combo_engine.py": true,
+    "api/test_flights_api.py": true,
+    "api/test_hotels_api.py": true,
+    "test_main.py": true
+  },
+  "corner": {},
+  "excluded": []
 }

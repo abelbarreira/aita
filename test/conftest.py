@@ -3,8 +3,9 @@ import json
 import os
 from datetime import datetime
 from aita.version import get_version
+from pathlib import Path
 
-# Set the path to applicable_tests.json here (can be outside test folder)
+# Path to applicable_tests.json (can be overridden by env var)
 APPLICABLE_TESTS_PATH = os.environ.get(
     "APPLICABLE_TESTS_PATH",
     os.path.abspath(os.path.join(os.path.dirname(__file__), "applicable_tests.json")),
@@ -24,8 +25,7 @@ def get_git_branch():
 
 def get_git_commit():
     try:
-        commit = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode().strip()
-        return commit
+        return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode().strip()
     except Exception:
         return "Unknown"
 
@@ -52,24 +52,42 @@ def pytest_html_results_summary(prefix, summary, postfix):
     )
 
 
-def pytest_ignore_collect(collection_path: "pathlib.Path", config):
+def pytest_ignore_collect(collection_path: Path, config):
     """
-    Ignore test files not marked as applicable in applicable_tests.json.
+    Ignore test files not marked as applicable in applicable_tests.json,
+    using categories and an excluded list.
     """
-    # Only check .py files in the test folder
-    if not str(collection_path).endswith(".py"):
+    # Only process .py test files
+    if collection_path.suffix != ".py":
         return False
 
-    # Get relative path from test folder
-    test_folder = os.path.abspath(os.path.dirname(__file__))
-    rel_path = os.path.relpath(str(collection_path), test_folder).replace("\\", "/")
+    # Get path relative to test folder
+    test_folder = Path(__file__).parent.resolve()
+    rel_path = str(collection_path.relative_to(test_folder)).replace("\\", "/")
 
     # Load applicable tests config
     try:
         with open(APPLICABLE_TESTS_PATH, encoding="utf-8") as f:
-            applicable = json.load(f)
+            config_data = json.load(f)
     except Exception as e:
         print(f"Warning: Could not load applicable_tests.json: {e}")
         return False
 
-    return not applicable.get(rel_path, False)
+    tests_to_run = config_data.get("tests_to_run", {})
+    excluded_tests = set(
+        config_data.get("excluded", [])
+    )  # now a list → set for fast lookup
+
+    # Always exclude if in the excluded list
+    if rel_path in excluded_tests:
+        return True
+
+    # Check all enabled categories
+    for category, enabled in tests_to_run.items():
+        if enabled:
+            category_tests = config_data.get(category, {})
+            if category_tests.get(rel_path, False):
+                return False  # Found in an enabled category → include it
+
+    # If not found in any enabled category → ignore
+    return True
