@@ -7,3 +7,5 @@ test/reports/
 __pycache__/
 *.pyc
 dist
+
+flights_api_priceline_com2_*.json
