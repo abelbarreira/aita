@@ -9,6 +9,7 @@ from aita.core.results_builder import (
     ResultsFlights,
     pretty_print_results_airports,
     pretty_print_results_flights,
+    save_results_flights,
 )
 
 try:
@@ -19,15 +20,24 @@ except ImportError:
 
 
 LOG: bool = True  # Set to False to disable logging
-USE_LOG: bool = True  # Set to True to use log files instead of API calls
+USE_LOG: bool = False  # Set to True to use log files instead of API calls
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def search_flights(query_flights: QueryFlights) -> dict:
 
+    log_dates = (
+        "_"
+        + query_flights.query_dates.start_date.strftime("%Y-%m-%d")
+        + query_flights.query_dates.end_date.strftime("%Y-%m-%d")
+    )
+
     # auto-complete: Origin
     response_json = _search_flights_priceline_com2_auto_complete(
-        query_flights.origin, log=LOG, log_name=query_flights.origin, use_log=USE_LOG
+        query_flights.origin,
+        log=LOG,
+        log_name=query_flights.origin + log_dates,
+        use_log=USE_LOG,
     )
     origin_airports = _generate_result_airports(response_json)
 
@@ -38,7 +48,7 @@ def search_flights(query_flights: QueryFlights) -> dict:
     response_json = _search_flights_priceline_com2_auto_complete(
         query_flights.destination,
         log=LOG,
-        log_name=query_flights.destination,
+        log_name=query_flights.destination + log_dates,
         use_log=USE_LOG,
     )
     destination_airports = _generate_result_airports(response_json)
@@ -51,6 +61,7 @@ def search_flights(query_flights: QueryFlights) -> dict:
     if not destination_airports:
         raise ValueError("No destination airports found.")
 
+    # todo: for the moment it always use the first airport found
     response_json = _search_flights_priceline_com2_search_roundtrip(
         originAirportCode=origin_airports[0].id,
         destinationAirportCode=destination_airports[0].id,
@@ -58,11 +69,16 @@ def search_flights(query_flights: QueryFlights) -> dict:
         returnDate=query_flights.query_dates.end_date.strftime("%Y-%m-%d"),
         direct_flight=query_flights.flight.direct,
         log=LOG,
-        log_name="",
+        log_name=log_dates,
         use_log=USE_LOG,
     )
 
     result_flights = _generate_result_flights(response_json)
+    log_name = (
+        f"flights_{query_flights.origin}_{query_flights.destination}_{log_dates}.json"
+    )
+    log_path = os.path.join(BASE_DIR, f"flights_api_priceline_com2_{log_name}.json")
+    save_results_flights(result_flights, log_path)
 
     print("\nResult Flights:", len(result_flights))
     pretty_print_results_flights(result_flights)  # Debugging output

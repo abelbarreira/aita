@@ -1,6 +1,6 @@
 import pytest
 from aita.api import flights_api_priceline_com2
-from aita.core.query_dates import generate_query_dates
+from aita.core.query_dates import generate_query_dates, pretty_print_query_dates
 from aita.core.filters import Filters, FlightFilters, HotelFilters
 from aita.core.query_builder import QueryFlights
 
@@ -13,7 +13,7 @@ def filters_obj():
         area="Magaluf",
         start_date="6 September",
         duration_min=5,
-        duration_max=6,
+        duration_max=5,
         flexibility=1,
         flight=FlightFilters(
             departure_time_min="00:05",
@@ -29,12 +29,18 @@ def filters_obj():
 
 
 def test_search_flights_success(filters_obj):
-    query_dates_dic_obj = generate_query_dates(filters_obj)
-    query_flights = QueryFlights.from_filters(filters_obj, query_dates_dic_obj[0])
-    query_flights.pretty_print()
+    query_dates = generate_query_dates(filters_obj)
 
-    result_flights = flights_api_priceline_com2.search_flights(query_flights)
+    print("\nDates:", len(query_dates))
+    pretty_print_query_dates(query_dates)
 
-    assert result_flights is not None
-    assert isinstance(result_flights, dict)
-    # Optionally, check for expected keys in result_flights
+    for _, query_date in query_dates.items():
+
+        query_flights = QueryFlights.from_filters(filters_obj, query_date)
+        query_flights.pretty_print()
+
+        result_flights = flights_api_priceline_com2.search_flights(query_flights)
+
+        assert result_flights is not None
+        assert isinstance(result_flights, dict)
+        # Optionally, check for expected keys in result_flights

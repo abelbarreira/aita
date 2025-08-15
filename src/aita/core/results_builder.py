@@ -1,6 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from datetime import datetime
+import json
 
 
 @dataclass
@@ -106,3 +107,14 @@ def pretty_print_results_flights(results_flights: dict[int, ResultsFlights]) -> 
                 flight.currency,
             )
         )
+
+
+def save_results_flights(
+    results_flights: dict[int, ResultsFlights], log_file_name: str
+) -> None:
+    # Convert dataclasses to dicts and keys to strings
+    json_ready = {str(k): asdict(v) for k, v in results_flights.items()}
+
+    # Save to JSON file
+    with open(log_file_name, "w", encoding="utf-8") as f:
+        json.dump(json_ready, f, indent=2)
