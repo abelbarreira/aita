@@ -1,7 +1,7 @@
 {
   "tests_to_run": {
     "functional": true,
-    "corner": false
+    "api_requests": false
   },
   "functional": {
     "core/test_filters.py": true,
@@ -9,10 +9,11 @@
     "core/test_query_builder.py": true,
     "core/test_combo_engine.py": true,
     "api/test_flights_api.py": true,
-    "api/test_flights_api_priceline_com2.py": true,
     "api/test_hotels_api.py": true,
     "test_main.py": true
   },
-  "corner": {},
+  "api_requests": {
+    "api/test_flights_api_priceline_com2.py": true
+  },
   "excluded": []
 }
