@@ -3,7 +3,6 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-from collections import defaultdict
 from aita.version import get_version
 
 # Path to applicable_tests.json (can be overridden by env var)

@@ -1,38 +1,39 @@
 import pytest
+from datetime import datetime
+from types import SimpleNamespace
+from typing import Any
 from aita import main as aita_main
 from aita.core.filters import Filters
 from aita.core.query_dates import QueryDates
-from datetime import datetime
 
 
 class TestAitaMain:
     @classmethod
-    def setup_class(cls):
-        """Runs once for the entire class"""
-        cls.original_env = {}  # Store original environment if needed
-        # Any heavy setup shared across tests can go here
+    def setup_class(cls) -> None:
+        """Runs once for the entire class."""
+        cls.original_env: dict[str, Any] = {}  # Store original environment if needed
 
     @classmethod
-    def teardown_class(cls):
-        """Runs once after all tests in the class"""
+    def teardown_class(cls) -> None:
+        """Runs once after all tests in the class."""
         # Restore any global state if needed
         cls.original_env.clear()
 
-    def setup_method(self, method):
-        """Runs before each test method"""
+    def setup_method(self, method: Any) -> None:
+        """Runs before each test method."""
         # Reset mocks or temp variables if necessary
-        self.mocks = []
+        self.mocks: list[Any] = []
 
-    def teardown_method(self, method):
-        """Runs after each test method"""
+    def teardown_method(self, method: Any) -> None:
+        """Runs after each test method."""
         # Clean up mocks or other temporary state
         for m in self.mocks:
             m.stop()
 
-    def test_version_output(self, mocker, capsys):
+    def test_version_output(self, mocker: Any, capsys: Any) -> None:
         mocker.patch(
             "argparse.ArgumentParser.parse_args",
-            return_value=type("Args", (), {"version": True, "prompt": None}),
+            return_value=SimpleNamespace(version=True, prompt=None),
         )
         mocker.patch("aita.main.get_version", return_value="1.2.3")
 
@@ -40,10 +41,10 @@ class TestAitaMain:
         captured = capsys.readouterr()
         assert "AitA Version: 1.2.3" in captured.out
 
-    def test_missing_prompt(self, mocker, capsys):
+    def test_missing_prompt(self, mocker: Any, capsys: Any) -> None:
         mocker.patch(
             "argparse.ArgumentParser.parse_args",
-            return_value=type("Args", (), {"version": False, "prompt": None}),
+            return_value=SimpleNamespace(version=False, prompt=None),
         )
         mocker.patch("builtins.exit", side_effect=SystemExit)
 
@@ -53,12 +54,12 @@ class TestAitaMain:
         captured = capsys.readouterr()
         assert "Error: --prompt is required" in captured.out
 
-    def test_missing_env_keys(self, mocker, capsys):
-        args = type("Args", (), {"version": False, "prompt": "Find flights to Paris"})
+    def test_missing_env_keys(self, mocker: Any, capsys: Any) -> None:
+        args = SimpleNamespace(version=False, prompt="Find flights to Paris")
         mocker.patch("argparse.ArgumentParser.parse_args", return_value=args)
         mocker.patch("aita.main.load_dotenv")
 
-        env_values = {
+        env_values: dict[str, Any] = {
             "CURRENCY": None,
             "FLIGHT_API_BASE_URL": "url",
             "FLIGHT_API_KEY": None,
@@ -78,8 +79,8 @@ class TestAitaMain:
         assert "FLIGHT_API_KEY" in captured.out
         assert "HOTEL_API_KEY" in captured.out
 
-    def test_successful_flow(self, mocker, capsys):
-        args = type("Args", (), {"version": False, "prompt": "Find flights to Paris"})
+    def test_successful_flow(self, mocker: Any, capsys: Any) -> None:
+        args = SimpleNamespace(version=False, prompt="Find flights to Paris")
         mocker.patch("argparse.ArgumentParser.parse_args", return_value=args)
         mocker.patch("aita.main.load_dotenv")
         mocker.patch("os.getenv", side_effect=lambda key: "https://valid.url")
@@ -98,9 +99,10 @@ class TestAitaMain:
         )
 
         # Mock query_dates
-        query_dates_dict = {
+        query_dates_dict: dict[int, QueryDates] = {
             0: QueryDates(
-                start_date=datetime(2025, 1, 5), end_date=datetime(2025, 1, 8)
+                start_date=datetime(2025, 1, 5),
+                end_date=datetime(2025, 1, 8),
             )
         }
         mocker.patch(
