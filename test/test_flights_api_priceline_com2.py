@@ -1,31 +1,8 @@
 import pytest
-import os
 from aita.api import flights_api_priceline_com2
 from aita.core.query_dates import generate_query_dates
 from aita.core.filters import Filters, FlightFilters, HotelFilters
 from aita.core.query_builder import QueryFlights
-
-try:
-    from dotenv import load_dotenv
-except ImportError:
-    print("Missing 'python-dotenv'. Please install with: pip install python-dotenv")
-    exit(1)
-
-REQUIRED_KEYS = [
-    "CURRENCY",
-    "FLIGHT_API_BASE_URL",
-    "FLIGHT_API_KEY",
-    "HOTEL_API_BASE_URL",
-    "HOTEL_API_KEY",
-]
-
-
-def check_env_keys(required_keys):
-    missing = []
-    for key in required_keys:
-        if not os.getenv(key):
-            missing.append(key)
-    return missing
 
 
 @pytest.fixture
@@ -52,17 +29,12 @@ def filters_obj():
 
 
 def test_search_flights_success(filters_obj):
-    load_dotenv()
-    missing_keys = check_env_keys(REQUIRED_KEYS)
-    if missing_keys:
-        pytest.skip(f"Missing keys in .env file: {missing_keys}")
-
     query_dates_dic_obj = generate_query_dates(filters_obj)
     query_flights = QueryFlights.from_filters(filters_obj, query_dates_dic_obj[0])
     query_flights.pretty_print()
 
-    results = flights_api_priceline_com2.search_flights(query_flights)
+    result_flights = flights_api_priceline_com2.search_flights(query_flights)
 
-    assert results is not None
-    assert isinstance(results, dict)
-    # Optionally, check for expected keys in results
+    assert result_flights is not None
+    assert isinstance(result_flights, dict)
+    # Optionally, check for expected keys in result_flights

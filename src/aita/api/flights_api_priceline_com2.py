@@ -11,6 +11,13 @@ from aita.core.results_builder import (
     pretty_print_results_flights,
 )
 
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    print("Missing 'python-dotenv'. Please install with: pip install python-dotenv")
+    exit(1)
+
+
 LOG: bool = True  # Set to False to disable logging
 USE_LOG: bool = True  # Set to True to use log files instead of API calls
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -63,6 +70,23 @@ def search_flights(query_flights: QueryFlights) -> dict:
     return response_json  # Return the full JSON response
 
 
+REQUIRED_KEYS = [
+    "CURRENCY",
+    "FLIGHT_API_BASE_URL",
+    "FLIGHT_API_KEY",
+    "HOTEL_API_BASE_URL",
+    "HOTEL_API_KEY",
+]
+
+
+def check_env_keys(required_keys):
+    missing = []
+    for key in required_keys:
+        if not os.getenv(key):
+            missing.append(key)
+    return missing
+
+
 def _search_flights_priceline_com2(
     type: str,
     query: dict,
@@ -70,6 +94,14 @@ def _search_flights_priceline_com2(
     log_name: str = "",
     use_log: bool = False,
 ) -> dict:
+    load_dotenv()
+
+    # Check keys required
+    missing_keys = check_env_keys(REQUIRED_KEYS)
+    if missing_keys:
+        raise RuntimeError(f"Missing keys in .env file: {missing_keys}")
+
+    # Get API base URL and key from environment variables
     base_url = os.getenv("FLIGHT_API_BASE_URL")
     api_key = os.getenv("FLIGHT_API_KEY")
 
