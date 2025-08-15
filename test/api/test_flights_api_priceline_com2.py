@@ -15,7 +15,7 @@ def filters_obj():
         origin="Copenhagen",
         destination="Mallorca",
         area="Magaluf",
-        start_date="6 September",
+        start_date="22 September",
         duration_min=5,
         duration_max=5,
         flexibility=1,

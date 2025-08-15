@@ -28,8 +28,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 def search_flights(query_flights: QueryFlights) -> dict[int, Result]:
     # todo update this format
     log_dates = (
-        "_"
-        + query_flights.query_dates.start_date.strftime("%Y-%m-%d")
+        query_flights.query_dates.start_date.strftime("%Y-%m-%d")
+        + "_"
         + query_flights.query_dates.end_date.strftime("%Y-%m-%d")
     )
 
@@ -37,7 +37,7 @@ def search_flights(query_flights: QueryFlights) -> dict[int, Result]:
     response_json = _search_flights_priceline_com2_auto_complete(
         query_flights.origin,
         log=LOG,
-        log_name=query_flights.origin + log_dates,
+        log_name=query_flights.origin + "_" + log_dates,
         use_log=USE_LOG,
     )
     origin_airports = _generate_result_airports(response_json)
@@ -49,7 +49,7 @@ def search_flights(query_flights: QueryFlights) -> dict[int, Result]:
     response_json = _search_flights_priceline_com2_auto_complete(
         query_flights.destination,
         log=LOG,
-        log_name=query_flights.destination + log_dates,
+        log_name=query_flights.destination + "_" + log_dates,
         use_log=USE_LOG,
     )
     destination_airports = _generate_result_airports(response_json)

@@ -1,7 +1,7 @@
 {
   "tests_to_run": {
-    "functional": true,
-    "api_requests": false
+    "functional": false,
+    "api_requests": true
   },
   "functional": {
     "core/test_filters.py": true,
