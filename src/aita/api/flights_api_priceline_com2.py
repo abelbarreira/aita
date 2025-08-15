@@ -5,11 +5,12 @@ import requests
 import json
 from aita.core.query_builder import QueryFlights
 from aita.core.results_builder import (
-    ResultsAirports,
-    ResultsFlights,
-    pretty_print_results_airports,
-    pretty_print_results_flights,
-    save_results_flights,
+    ResultAirport,
+    ResultFlight,
+    Result,
+    pretty_print_result_airports,
+    pretty_print_result_flights,
+    save_result_flights,
 )
 
 try:
@@ -20,12 +21,12 @@ except ImportError:
 
 
 LOG: bool = True  # Set to False to disable logging
-USE_LOG: bool = False  # Set to True to use log files instead of API calls
+USE_LOG: bool = True  # Set to True to use log files instead of API calls
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def search_flights(query_flights: QueryFlights) -> dict:
-
+def search_flights(query_flights: QueryFlights) -> dict[int, Result]:
+    # todo update this format
     log_dates = (
         "_"
         + query_flights.query_dates.start_date.strftime("%Y-%m-%d")
@@ -41,8 +42,8 @@ def search_flights(query_flights: QueryFlights) -> dict:
     )
     origin_airports = _generate_result_airports(response_json)
 
-    print("\nOrigin Airports found:", len(origin_airports))
-    pretty_print_results_airports(origin_airports)
+    # print("\nOrigin Airports found:", len(origin_airports))
+    # pretty_print_result_airports(origin_airports)
 
     # auto-complete: Destination
     response_json = _search_flights_priceline_com2_auto_complete(
@@ -53,8 +54,8 @@ def search_flights(query_flights: QueryFlights) -> dict:
     )
     destination_airports = _generate_result_airports(response_json)
 
-    print("\nDestination Airports found:", len(destination_airports))
-    pretty_print_results_airports(destination_airports)  # Debugging output
+    # print("\nDestination Airports found:", len(destination_airports))
+    # pretty_print_result_airports(destination_airports)  # Debugging output
 
     if not origin_airports:
         raise ValueError("No origin airports found.")
@@ -73,17 +74,29 @@ def search_flights(query_flights: QueryFlights) -> dict:
         use_log=USE_LOG,
     )
 
-    result_flights = _generate_result_flights(response_json)
+    result_flights: dict[int, ResultFlight] = _generate_result_flights(response_json)
     log_name = (
         f"flights_{query_flights.origin}_{query_flights.destination}_{log_dates}.json"
     )
     log_path = os.path.join(BASE_DIR, f"flights_api_priceline_com2_{log_name}.json")
-    save_results_flights(result_flights, log_path)
+    save_result_flights(result_flights, log_path)
+    # print("\nResult Flights:", len(result_flights))
+    # pretty_print_result_flights(result_flights)  # Debugging output
 
-    print("\nResult Flights:", len(result_flights))
-    pretty_print_results_flights(result_flights)  # Debugging output
+    results: dict[int, Result] = {}
+    for idx, result_flight in result_flights.items():
+        restult = Result.from_results(
+            query_flights.query_dates.start_date,
+            query_flights.query_dates.end_date,
+            query_flights.origin,
+            query_flights.destination,
+            origin_airports[0],
+            destination_airports[0],
+            result_flight,
+        )
+        results[idx] = restult
 
-    return response_json  # Return the full JSON response
+    return results
 
 
 REQUIRED_KEYS = [
@@ -206,9 +219,9 @@ def _search_flights_priceline_com2_search_roundtrip(
     return response_json
 
 
-def _generate_result_airports(response_json: dict) -> dict[int, ResultsAirports]:
+def _generate_result_airports(response_json: dict) -> dict[int, ResultAirport]:
     """
-    Returns a dict[int, ResultsAirports] containing all airports
+    Returns a dict[int, ResultAirport] containing all airports
     where cityName matches entered (case-insensitive).
     """
     results_airports = {}
@@ -220,7 +233,7 @@ def _generate_result_airports(response_json: dict) -> dict[int, ResultsAirports]
             item.get("type") == "AIRPORT"
             and item.get("cityName", "").lower() == item.get("entered", "").lower()
         ):
-            results_airports[idx] = ResultsAirports(
+            results_airports[idx] = ResultAirport(
                 id=item["id"], airport_name=item["itemName"]
             )
             idx += 1
@@ -299,8 +312,8 @@ def _generate_result_airports(response_json: dict) -> dict[int, ResultsAirports]
 #     return filtered
 
 
-def _generate_result_flights(response_json: dict) -> dict[int, ResultsFlights]:
-    results_flights: dict[int, ResultsFlights] = {}
+def _generate_result_flights(response_json: dict) -> dict[int, ResultFlight]:
+    result_flights: dict[int, ResultFlight] = {}
 
     data = response_json.get("data", {})
     listings = data.get("listings", [])
@@ -380,7 +393,7 @@ def _generate_result_flights(response_json: dict) -> dict[int, ResultsFlights]:
         if not currency:
             currency = "USD"
 
-        results_flights[idx] = ResultsFlights(
+        result_flights[idx] = ResultFlight(
             airline_name=airline_name_str,
             flight_numbers=flight_numbers_str,
             departure_time=departure_time,
@@ -391,4 +404,4 @@ def _generate_result_flights(response_json: dict) -> dict[int, ResultsFlights]:
             currency=currency,
         )
 
-    return results_flights
+    return result_flights
