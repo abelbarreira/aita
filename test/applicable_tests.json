@@ -1,10 +1,18 @@
 {
-  "test_filters": false,
-  "test_query_dates": false,
-  "test_query_builder": false,
-  "test_combo_engine": false,
-  "test_flights_api": false,
-  "test_flights_api_priceline_com2": true,
-  "test_hotels_api": false,
-  "test_main": false
+  "tests_to_run": {
+    "functional": true,
+    "corner": false
+  },
+  "functional": {
+    "core/test_filters.py": true,
+    "core/test_query_dates.py": true,
+    "core/test_query_builder.py": true,
+    "core/test_combo_engine.py": true,
+    "api/test_flights_api.py": true,
+    "api/test_flights_api_priceline_com2.py": true,
+    "api/test_hotels_api.py": true,
+    "test_main.py": true
+  },
+  "corner": {},
+  "excluded": []
 }
