@@ -1,7 +1,6 @@
 from __future__ import annotations
 import re
 from dataclasses import dataclass
-from typing import Dict
 from datetime import datetime, timedelta
 from aita.core.filters import Filters
 
@@ -16,7 +15,7 @@ class QueryDates:
     end_date: datetime
 
 
-def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
+def generate_query_dates(filter_obj: Filters) -> dict[int, QueryDates]:
     """
     Generates a dictionary of QueryDates keyed by ID based on the Filters parameters.
 
@@ -24,7 +23,7 @@ def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
         filter_obj (Filters): The filter object containing date-related parameters.
 
     Returns:
-        Dict[int, QueryDates]: A dictionary of QueryDates keyed by ID.
+        dict[int, QueryDates]: A dictionary of QueryDates keyed by ID.
     """
     if (
         filter_obj.start_date is None
@@ -60,9 +59,9 @@ def generate_query_dates(filter_obj: Filters) -> Dict[int, QueryDates]:
     return query_dates
 
 
-def pretty_print_query_dates(query_dates: Dict[int, QueryDates]) -> None:
+def pretty_print_query_dates(query_dates: dict[int, QueryDates]) -> None:
     """
-    Nicely prints all entries in a Dict[int, QueryDates].
+    Nicely prints all entries in a dict[int, QueryDates].
     """
     for key, qd in query_dates.items():
         print(

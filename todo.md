@@ -1,5 +1,13 @@
 # ToDo
 
+- Modify: save_result_flights and continue with Hotels thing
+- Flights API:
+  - Find out how to manage more APIs and include one more
+    - Implement this flights_api_priceline_com2.py as a class
+    - Implement a Base Abstract class with flights_api.py
+    - Implement a new one with Booking.com for example, integrate and see how to merge the results properly
+- Then continue with the Hotels.
+
 ✅ Current Status Summary
 Your project includes:
 
