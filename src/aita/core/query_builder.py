@@ -46,7 +46,7 @@ class QueryFlights:
         """
         Nicely prints all attributes of the QueryFlights instance.
         """
-        print(f"{self.__class__.__name__}:")
+        print(f"\n{self.__class__.__name__}:")
         print(f"  origin: {self.origin}")
         print(f"  destination: {self.destination}")
         print(f"  start_date: {self.query_dates.start_date.strftime('%Y-%m-%d')}")
