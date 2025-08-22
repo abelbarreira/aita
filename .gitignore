@@ -1,11 +1,20 @@
-.vscode/settings.json
+###########  FILES  ############
+flights_api_priceline_com2_*.json
+
+########### PYTHON #############
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+build/
+dist/
+
+# Unit test / coverage reports
 test/reports/
 
+# Environments
 .env
 
-# Python
-__pycache__/
-*.pyc
-dist
-
-flights_api_priceline_com2_*.json
+########### VS CODE ############
+.vscode/settings.json
