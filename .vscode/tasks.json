@@ -28,5 +28,12 @@
         "isDefault": true
       }
     },
+    {
+      "label": "Python - Python Current File",
+      "type": "shell",
+      "command": "\"${command:python.interpreterPath}\" $(cygpath -u \"${file}\")",
+      "args": [],
+      "group": "build"
+    },
   ]
 }
