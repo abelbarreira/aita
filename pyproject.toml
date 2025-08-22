@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "aita"
-version = "0.1.0"
+dynamic = ["version"]
 description = "AitA - AI Travel Assistant"
 authors = [{ name = "Your Name", email = "you@example.com" }]
 readme = "README.md"
@@ -19,6 +19,9 @@ dependencies = [
 
 [project.scripts]
 aita = "aita.main:main"
+
+[tool.hatch.version]
+path = "src/aita/version.py"
 
 [tool.hatch.envs.default]
 dependencies = [
