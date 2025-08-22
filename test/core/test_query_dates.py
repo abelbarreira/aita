@@ -1,14 +1,16 @@
-import pytest
-import os
 import json
+import os
 from datetime import datetime
 from typing import Any
+
+import pytest
+
+from aita.core.filters import Filters
 from aita.core.query_dates import (
-    generate_query_dates,
     QueryDates,
+    generate_query_dates,
     pretty_print_query_dates,
 )
-from aita.core.filters import Filters
 
 
 def load_test_vectors() -> list[dict[str, Any]]:
@@ -88,7 +90,8 @@ class TestQueryDates:
         )
         with pytest.raises(
             ValueError,
-            match="Filters object must have start_date, flexibility, duration_min, and duration_max defined.",
+            match="Filters object must have start_date, flexibility, "
+            "duration_min, and duration_max defined.",
         ):
             generate_query_dates(filter_obj)
 
@@ -108,9 +111,7 @@ class TestQueryDates:
         assert single_query.start_date == datetime.strptime(
             "15 December 2025", "%d %B %Y"
         )
-        assert single_query.end_date == datetime.strptime(
-            "20 December 2025", "%d %B %Y"
-        )
+        assert single_query.end_date == datetime.strptime("20 December 2025", "%d %B %Y")
 
     def test_pretty_print_query_dates(self, capsys: Any) -> None:
         """Test pretty_print_query_dates prints the expected output."""

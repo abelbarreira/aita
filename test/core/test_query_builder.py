@@ -1,9 +1,11 @@
-import pytest
 from datetime import datetime
 from typing import Any
+
+import pytest
+
 from aita.core.filters import Filters, FlightFilters, HotelFilters
-from aita.core.query_dates import QueryDates
 from aita.core.query_builder import QueryFlights, QueryHotels
+from aita.core.query_dates import QueryDates
 
 
 @pytest.fixture(scope="module")

@@ -3,10 +3,12 @@ Query Builder: Converts structured filters into API query parameters.
 """
 
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from aita.core.query_dates import QueryDates
-from aita.core.filters import FlightFilters, HotelFilters, Filters
 from typing import Optional
+
+from aita.core.filters import Filters, FlightFilters, HotelFilters
+from aita.core.query_dates import QueryDates
 
 
 @dataclass

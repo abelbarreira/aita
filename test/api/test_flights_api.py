@@ -1,6 +1,8 @@
+from typing import Any
+
 import pytest
 import requests
-from typing import Any
+
 from aita.api import flights_api
 
 
@@ -25,7 +27,8 @@ class TestFlightsApi:
 
     @pytest.fixture(autouse=True)  # runs before every test method in this class only
     def _set_env_vars(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Ensure environment variables are set before each test using monkeypatch fixture."""
+        """Ensure environment variables are set before each test using monkeypatch
+        fixture."""
         monkeypatch.setenv("FLIGHT_API_BASE_URL", "https://mockapi.test")
         monkeypatch.setenv("FLIGHT_API_KEY", "mockkey123")
 
@@ -77,8 +80,6 @@ class TestFlightsApi:
         monkeypatch.delenv("FLIGHT_API_BASE_URL", raising=False)
         monkeypatch.delenv("FLIGHT_API_KEY", raising=False)
 
-        with pytest.raises(
-            RuntimeError, match="Flight API base URL or API key not set"
-        ):
+        with pytest.raises(RuntimeError, match="Flight API base URL or API key not set"):
             query: dict[str, str] = {"origin": "Copenhagen", "destination": "Rome"}
             flights_api.search_flights(query)

@@ -1,6 +1,8 @@
+from typing import Any
+
 import pytest
 import requests
-from typing import Any
+
 from aita.api import hotels_api
 
 

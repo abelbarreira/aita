@@ -1,7 +1,9 @@
-import pytest
 from datetime import datetime
 from types import SimpleNamespace
 from typing import Any
+
+import pytest
+
 from aita import main as aita_main
 from aita.core.filters import Filters
 from aita.core.query_dates import QueryDates
@@ -118,7 +120,8 @@ class TestAitaMain:
             Filters,
             "pretty_print",
             side_effect=lambda: print(
-                "origin: Berlin\ndestination: Paris\nstart_date: 5 January\nduration_min: 3\nduration_max: 3\nflexibility: 0"
+                "origin: Berlin\ndestination: Paris\nstart_date: 5 January\n "
+                "duration_min: 3\nduration_max: 3\nflexibility: 0"
             ),
         )
 

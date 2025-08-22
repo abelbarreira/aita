@@ -16,5 +16,8 @@ test/reports/
 # Environments
 .env
 
+# Linting
+.ruff_cache/
+
 ########### VS CODE ############
 .vscode/settings.json
