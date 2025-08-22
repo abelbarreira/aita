@@ -3,6 +3,7 @@ Hotels API: Handles communication with external hotel API.
 """
 
 import os
+
 import requests
 
 

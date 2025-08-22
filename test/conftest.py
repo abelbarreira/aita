@@ -1,8 +1,8 @@
-import subprocess
 import json
 import os
-from datetime import datetime
+import subprocess
 from pathlib import Path
+
 from aita.version import get_version
 
 # Path to applicable_tests.json (can be overridden by env var)
@@ -50,12 +50,12 @@ def pytest_html_results_summary(prefix, summary, postfix):
 
     prefix.extend(
         [
-            f"<br>",
+            "<br>",
             f"<p>Branch: <b>{branch}</b></p>",  # creates a separate paragraph (line)
             f"<p>Git commit: <b>{commit}</b></p>",
             # f"<p>Timestamp: {timestamp}</p>",
             # f"<p>CI run: {ci}</p>",
-            f"<br>",
+            "<br>",
         ]
     )
 

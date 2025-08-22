@@ -1,8 +1,9 @@
 import pytest
+
 from aita.api import flights_api_priceline_com2
-from aita.core.query_dates import generate_query_dates, pretty_print_query_dates
 from aita.core.filters import Filters, FlightFilters, HotelFilters
 from aita.core.query_builder import QueryFlights
+from aita.core.query_dates import generate_query_dates
 from aita.core.results_builder import (
     Result,
     pretty_print_result,
@@ -48,7 +49,10 @@ def test_search_flights_success(filters_obj):
         )
 
         print(
-            f"\n\n\nStart = {query_dates[idx].start_date.strftime('%Y-%m-%d')}\nEnd   = {query_dates[idx].end_date.strftime('%Y-%m-%d')}\n"
+            (
+                f"\n\n\nStart = {query_dates[idx].start_date.strftime('%Y-%m-%d')}\n"
+                f"End   = {query_dates[idx].end_date.strftime('%Y-%m-%d')}\n"
+            )
         )
         pretty_print_result(results)
 

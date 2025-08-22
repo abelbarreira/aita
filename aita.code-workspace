@@ -38,6 +38,14 @@
           "tooltip": "Run AitA tests",
           "cwd": "${workspaceFolder}" // Run from project root
         },
+        {
+          "name": "$(play) Format & Lint", // "$(play)" adds a play icon
+          "command": "./scripts/format_and_lint.sh",
+          "color": "yellow",
+          "singleInstance": false, // Reuse the same terminal
+          "tooltip": "Format & Lint AitA code",
+          "cwd": "${workspaceFolder}" // Run from project root
+        },
       ]
     }
   }

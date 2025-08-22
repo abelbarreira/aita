@@ -5,28 +5,26 @@
       "label": "Setup Python",
       "type": "shell",
       "command": "./scripts/setup_python.sh",
-      "group": {
-        "kind": "none",
-        "isDefault": true
-      }
     },
     {
       "label": "Run App",
       "type": "shell",
       "command": "./scripts/run_app.sh",
-      "group": {
-        "kind": "none",
-        "isDefault": true
-      }
     },
     {
       "label": "Run Tests",
       "type": "shell",
       "command": "./scripts/run_tests.sh",
-      "group": {
-        "kind": "none",
-        "isDefault": true
-      }
     },
+    {
+      "label": "Python - Python Current File",
+      "type": "shell",
+      "command": "\"${command:python.interpreterPath}\" $(cygpath -u \"${file}\")",
+    },
+    {
+      "label": "Format & Lint",
+      "type": "shell",
+      "command": "./scripts/format_and_lint.sh",
+    }
   ]
 }

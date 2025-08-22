@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+
 from aita.core.filters import Filters
 
 
@@ -32,7 +34,8 @@ def generate_query_dates(filter_obj: Filters) -> dict[int, QueryDates]:
         or filter_obj.duration_max is None
     ):
         raise ValueError(
-            "Filters object must have start_date, flexibility, duration_min, and duration_max defined."
+            "Filters object must have start_date, flexibility, duration_min, and "
+            "duration_max defined."
         )
 
     # Remove ordinal suffixes from day (e.g., '5th' -> '5')
@@ -65,5 +68,8 @@ def pretty_print_query_dates(query_dates: dict[int, QueryDates]) -> None:
     """
     for key, qd in query_dates.items():
         print(
-            f"ID {key}: Start = {qd.start_date.strftime('%Y-%m-%d')}, End = {qd.end_date.strftime('%Y-%m-%d')}"
+            (
+                f"ID {key}: Start = {qd.start_date.strftime('%Y-%m-%d')}, "
+                f"End = {qd.end_date.strftime('%Y-%m-%d')}"
+            )
         )

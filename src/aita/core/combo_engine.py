@@ -4,8 +4,8 @@ Combo Engine: Coordinates flight and hotel searches based on user filters.
 
 from aita.api.flights_api import search_flights
 from aita.api.hotels_api import search_hotels
-from aita.core.query_builder import QueryFlights, QueryHotels
 from aita.core.filters import Filters
+from aita.core.query_builder import QueryFlights, QueryHotels
 from aita.core.query_dates import QueryDates
 
 

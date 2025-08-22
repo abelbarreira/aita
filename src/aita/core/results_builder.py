@@ -1,6 +1,7 @@
 from __future__ import annotations
+
 import json
-from dataclasses import dataclass, asdict, field
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from typing import Optional
 
@@ -185,8 +186,8 @@ def pretty_print_result(results: dict[int, Result]) -> None:
 
     for idx, res in results.items():
         # Dates
-        start_str = res.start_date.strftime("%Y-%m-%d") if res.start_date else ""
-        end_str = res.end_date.strftime("%Y-%m-%d") if res.end_date else ""
+        # start_str = res.start_date.strftime("%Y-%m-%d") if res.start_date else ""
+        # end_str = res.end_date.strftime("%Y-%m-%d") if res.end_date else ""
 
         col_widths["ID"] = max(col_widths["ID"], len(str(idx)))
         # col_widths["Start Date"] = max(col_widths["Start Date"], len(start_str))
@@ -245,8 +246,8 @@ def pretty_print_result(results: dict[int, Result]) -> None:
 
     # Print rows
     for idx, res in results.items():
-        start_str = res.start_date.strftime("%Y-%m-%d") if res.start_date else ""
-        end_str = res.end_date.strftime("%Y-%m-%d") if res.end_date else ""
+        # start_str = res.start_date.strftime("%Y-%m-%d") if res.start_date else ""
+        # end_str = res.end_date.strftime("%Y-%m-%d") if res.end_date else ""
 
         print(
             row_format.format(

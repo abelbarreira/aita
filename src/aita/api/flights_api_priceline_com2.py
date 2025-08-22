@@ -1,15 +1,15 @@
 """[Priceline COM](https://rapidapi.com/ntd119/api/priceline-com2)"""
 
-import os
-import requests
 import json
+import os
+
+import requests
+
 from aita.core.query_builder import QueryFlights
 from aita.core.results_builder import (
+    Result,
     ResultAirport,
     ResultFlight,
-    Result,
-    pretty_print_result_airports,
-    pretty_print_result_flights,
     save_result_flights,
 )
 
@@ -244,7 +244,8 @@ def _generate_result_airports(response_json: dict) -> dict[int, ResultAirport]:
 #     response_json: dict, origin_code: str, destination_code: str, departure_date: str
 # ) -> list:
 #     """
-#     Filters listings for flights matching the given origin, destination, and departure date.
+#     Filters listings for flights matching the given origin, destination, and departure
+#     date.
 #     """
 #     filtered = []
 #     for listing in response_json.get("data", {}).get("listings", []):

@@ -1,9 +1,9 @@
-import pytest
 from datetime import datetime
 from typing import Any
+
+from aita.core import combo_engine
 from aita.core.filters import Filters, FlightFilters, HotelFilters
 from aita.core.query_dates import QueryDates
-from aita.core import combo_engine
 
 
 class TestComboEngine:
@@ -83,8 +83,8 @@ class TestComboEngine:
             "aita.core.combo_engine.search_hotels", return_value=hotel_results
         )
 
-        result: dict[str, list[dict[str, Any]]] = (
-            combo_engine.search_travel_combinations(filters, query_dates)
+        result: dict[str, list[dict[str, Any]]] = combo_engine.search_travel_combinations(
+            filters, query_dates
         )
 
         assert result == {"flights": flight_results, "hotels": hotel_results}

@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import re
 from dataclasses import dataclass, field
 from typing import Optional
@@ -65,7 +66,11 @@ class Filters:
 
         # Match start date
         if match := re.search(
-            r"starting from\s+\"?([A-Za-z0-9\s]+?)\s+(January|February|March|April|May|June|July|August|September|October|November|December)\"?(?:,|\s|$)",
+            (
+                r"starting from\s+\"?([A-Za-z0-9\s]+?)\s+"
+                r"(January|February|March|April|May|June|July|August|September|October|November|December)"
+                r"\"?(?:,|\s|$)"
+            ),
             prompt,
             re.IGNORECASE,
         ):
@@ -91,7 +96,10 @@ class Filters:
 
         # Match hotel proximity
         if match := re.search(
-            r"within\s+\"?([\d.]+)\s*(m|meters|km|kilometers)\"?\s+(from the beach|from the city center)",
+            (
+                r"within\s+\"?([\d.]+)\s*(m|meters|km|kilometers)\"?\s+"
+                r"(from the beach|from the city center)"
+            ),
             prompt,
             re.IGNORECASE,
         ):
@@ -126,15 +134,14 @@ class Filters:
         if re.search(r"\bdirect\b", prompt, re.IGNORECASE):
             filter_instance.flight.direct = True
         else:
-            filter_instance.flight.direct = (
-                False  # Explicitly set to False if not found
-            )
+            filter_instance.flight.direct = False  # Explicitly set to False if not found
 
         return filter_instance
 
     def matches(self, other: Filters) -> bool:
         """
-        Compares this Filters instance with another Filters instance to check if they match.
+        Compares this Filters instance with another Filters instance to check
+        if they match.
         """
         # Compare basic attributes
         if self.origin and other.origin and self.origin != other.origin:
@@ -203,7 +210,8 @@ class Filters:
 
     def check_missing_filters(self) -> list[str]:
         """
-        Checks if any filter in the Filters instance are None and returns a list of missing attributes.
+        Checks if any filter in the Filters instance are None and returns a list
+        of missing attributes.
         """
         missing = []
 

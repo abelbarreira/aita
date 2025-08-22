@@ -3,6 +3,7 @@ Flights API: Handles communication with external flight API.
 """
 
 import os
+
 import requests
 
 

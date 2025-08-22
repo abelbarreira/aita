@@ -1,7 +1,9 @@
-import pytest
-import os
 import json
+import os
 from typing import Any
+
+import pytest
+
 from src.aita.core.filters import Filters, FlightFilters, HotelFilters
 
 

@@ -6,13 +6,14 @@ Main entry point for AitA - AI Travel Assistant
 
 import argparse
 import os
-from aita.version import get_version
+
 from aita.core.filters import Filters
 from aita.core.query_dates import (
+    QueryDates,
     generate_query_dates,
     pretty_print_query_dates,
-    QueryDates,
 )
+from aita.version import get_version
 
 try:
     from dotenv import load_dotenv
@@ -40,9 +41,7 @@ def check_env_keys(required_keys):
 def main():
     parser = argparse.ArgumentParser(description="🧳 AitA - AI Travel Assistant")
     parser.add_argument("--prompt", type=str, help="Travel prompt in natural language")
-    parser.add_argument(
-        "--version", action="store_true", help="Show the current version"
-    )
+    parser.add_argument("--version", action="store_true", help="Show the current version")
     args = parser.parse_args()
 
     if args.version:
