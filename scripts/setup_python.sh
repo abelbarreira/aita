@@ -30,6 +30,9 @@ fi
 
 python -m pipx ensurepath
 
+# Needed to export `pipx` path on this script run
+export PATH="$PATH:/home/abr/.local/bin"
+
 # Install or upgrade Hatch using pipx
 if ! command -v hatch &> /dev/null; then
   echo "🔧 Installing Hatch via pipx..."
