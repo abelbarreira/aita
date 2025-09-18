@@ -18,6 +18,7 @@ fi
 echo "🐍 Setting Python version to $PYTHON_VERSION"
 pyenv install -s "$PYTHON_VERSION"
 pyenv local "$PYTHON_VERSION"
+echo "Using Python at: $(pyenv which python)"
 
 # Install pipx if not present
 if ! command -v pipx &> /dev/null; then
@@ -43,6 +44,9 @@ else
 fi
 
 echo "🔎 Ensuring Hatch environment is created/updated with dependencies from pyproject.toml..."
+export HATCH_PYTHON="$(pyenv which python)"
+echo "Using HATCH_PYTHON: $HATCH_PYTHON"
+
 hatch env create
 
 echo
